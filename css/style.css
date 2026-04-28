@@ -693,6 +693,8 @@ address {
 
     .manifesto-text {
         font-size: clamp(3rem, 10vw, 7rem);
+        opacity: 1 !important;
+        transform: none !important;
     }
 
     /* Disable heavy parallax on mobile via CSS as fallback */
@@ -704,7 +706,8 @@ address {
     .sec-footer::before {
         transform: none !important;
         background-attachment: scroll;
-        /* Force scroll instead of fixed if any was present */
+        height: 100% !important;
+        top: 0 !important;
     }
 }
 
