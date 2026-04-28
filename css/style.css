@@ -56,7 +56,7 @@ body {
     width: 100%;
     height: 130%;
     /* Extra height for scroll room */
-    background-image: linear-gradient(rgba(12, 12, 12, 0.2), rgba(12, 12, 12, 0.7)), url('../images/IMG_7835.jpg');
+    background-image: linear-gradient(rgba(12, 12, 12, 0.2), rgba(12, 12, 12, 0.7)), url('../images/IMG_7835.jpeg');
     background-size: cover;
     background-position: center;
     transform: translateY(var(--parallax-y, 0));
@@ -212,7 +212,7 @@ body {
     left: 0;
     width: 100%;
     height: 130%;
-    background-image: linear-gradient(rgba(12, 12, 12, 0.3), rgba(12, 12, 12, 0.6)), url('../images/IMG_7827.jpg');
+    background-image: linear-gradient(rgba(12, 12, 12, 0.3), rgba(12, 12, 12, 0.6)), url('../images/IMG_7827.jpeg');
     background-size: cover;
     background-position: center;
     transform: translateY(var(--parallax-y, 0));
@@ -272,7 +272,7 @@ body {
     left: 0;
     width: 100%;
     height: 130%;
-    background-image: linear-gradient(rgba(12, 12, 12, 0.7), rgba(12, 12, 12, 0.7)), url('../images/IMG_7834.jpg');
+    background-image: linear-gradient(rgba(12, 12, 12, 0.7), rgba(12, 12, 12, 0.7)), url('../images/IMG_7834.jpeg');
     background-size: cover;
     background-position: center;
     transform: translateY(var(--parallax-y, 0));
@@ -287,7 +287,7 @@ body {
     left: 0;
     width: 100%;
     height: 130%;
-    background-image: linear-gradient(rgba(12, 12, 12, 0.4), rgba(12, 12, 12, 0.7)), url('../images/IMG_7837.jpg');
+    background-image: linear-gradient(rgba(12, 12, 12, 0.4), rgba(12, 12, 12, 0.7)), url('../images/IMG_7837.jpeg');
     background-size: cover;
     background-position: center;
     transform: translateY(var(--parallax-y, 0));
@@ -310,45 +310,92 @@ body {
     color: var(--c-red);
 }
 
-.marquee-gallery {
-    width: 100%;
+/* Slideshow Gallery */
+.slideshow-container {
     position: relative;
-    display: flex;
+    width: calc(100% - 8rem);
+    max-width: 1400px;
+    height: 65vh;
+    min-height: 400px;
+    margin: 0 auto;
     overflow: hidden;
-    user-select: none;
-    gap: 2rem;
+    border: 6px solid var(--c-black);
+    box-shadow: 20px 20px 0px var(--c-red);
+    z-index: 5;
 }
 
-.marquee-inner {
-    flex-shrink: 0;
-    display: flex;
-    justify-content: space-around;
-    min-width: 100%;
-    gap: 2rem;
-    animation: scroll-left 40s linear infinite;
+.slides-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
 }
 
-@keyframes scroll-left {
-    from {
-        transform: translateX(0);
-    }
-
-    to {
-        transform: translateX(calc(-100% - 2rem));
-    }
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1;
 }
 
-/* Gallery Images */
-.marquee-gallery img {
-    height: 400px;
-    width: auto;
+.slide.active {
+    opacity: 1;
+    z-index: 2;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    border: none;
-    transition: all 0.4s ease;
 }
 
-.marquee-gallery img:hover {
-    transform: scale(1.02);
+.slideshow-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--c-black);
+    color: var(--c-white);
+    border: none;
+    padding: 1.5rem;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slideshow-btn:hover {
+    background: var(--c-red);
+    padding: 1.8rem;
+}
+
+.prev { left: 0; }
+.next { right: 0; }
+
+.slideshow-btn svg {
+    width: 32px;
+    height: 32px;
+}
+
+@media (max-width: 768px) {
+    .slideshow-container {
+        width: calc(100% - 2rem);
+        height: 40vh;
+        box-shadow: 10px 10px 0px var(--c-red);
+    }
+
+    .slideshow-btn {
+        padding: 1rem;
+    }
+
+    .slideshow-btn svg {
+        width: 24px;
+        height: 24px;
+    }
 }
 
 /* Video Grid */
@@ -398,7 +445,7 @@ body {
     left: 0;
     width: 100%;
     height: 130%;
-    background-image: linear-gradient(135deg, rgba(12, 12, 12, 0.95) 0%, rgba(15, 64, 245, 0.4) 100%), url('../images/IMG_7833.jpg');
+    background-image: linear-gradient(135deg, rgba(12, 12, 12, 0.95) 0%, rgba(15, 64, 245, 0.4) 100%), url('../images/IMG_7833.jpeg');
     background-size: cover;
     background-position: center;
     transform: translateY(var(--parallax-y, 0));

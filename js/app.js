@@ -85,6 +85,48 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initial call
     update();
 
+    // Studio Gallery Slideshow Logic
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.getElementById('prevSlide');
+    const nextBtn = document.getElementById('nextSlide');
+    let currentSlide = 0;
+    let slideInterval;
+
+    function showSlide(index) {
+        if (slides.length === 0) return;
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (index + slides.length) % slides.length;
+        slides[currentSlide].classList.add('active');
+    }
+
+    function nextSlide() {
+        showSlide(currentSlide + 1);
+    }
+
+    function startSlideshow() {
+        slideInterval = setInterval(nextSlide, 2000);
+    }
+
+    if (slides.length > 0) {
+        startSlideshow();
+        
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                clearInterval(slideInterval);
+                nextSlide();
+                startSlideshow();
+            });
+        }
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                clearInterval(slideInterval);
+                showSlide(currentSlide - 1);
+                startSlideshow();
+            });
+        }
+    }
+
     // Re-check on resize for better experience
     window.addEventListener('resize', () => {
         const newIsDesktop = window.matchMedia('(min-width: 1024px)').matches;
