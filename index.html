@@ -20,14 +20,30 @@
 
 <body>
 
-    <div class="noise-overlay"></div>
 
     <main>
         <!-- Hero Section -->
         <section class="sec-hero">
             <header class="hero-nav">
-                <div class="nav-brand">THEBASSTUDIOS</div>
-                <a href="#book-slot" class="nav-cta">BOOK A SLOT</a>
+                <a href="tel:+918447307466" class="nav-icon-link phone-link">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l2.11-2.11a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                        </path>
+                    </svg>
+                    <span class="nav-reveal-text">+91 84473 07466</span>
+                </a>
+
+                <a href="https://instagram.com/thebasstudios" target="_blank" class="nav-icon-link ig-link-top">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                    <span class="nav-reveal-text">@thebasstudios</span>
+                </a>
             </header>
 
             <h1 class="huge-text-wrapper">
@@ -43,50 +59,41 @@
 
         <!-- Manifesto Section -->
         <section class="sec-manifesto">
+            <div class="manifesto-splash"></div>
             <h2 class="manifesto-text">we believe in<br>no compromises.</h2>
         </section>
 
-        <section class="sec-studio">
-            <div class="marquee-strip">
-                <div class="marquee-content">
-                    <span class="marquee-text">DESIGNED BY LUX //</span>
-                    <span class="marquee-text">DESIGNED BY LUX //</span>
-                    <span class="marquee-text">DESIGNED BY LUX //</span>
-                    <span class="marquee-text">DESIGNED BY LUX //</span>
-                    <span class="marquee-text">DESIGNED BY LUX //</span>
-                    <span class="marquee-text">DESIGNED BY LUX //</span>
-                    <span class="marquee-text">DESIGNED BY LUX //</span>
-                    <span class="marquee-text">DESIGNED BY LUX //</span>
-                    <span class="marquee-text">DESIGNED BY LUX //</span>
-                    <span class="marquee-text">DESIGNED BY LUX //</span>
-                </div>
-            </div>
-
-            <div class="studio-grid">
-                <div class="studio-left">
-                    <div class="marker-text">CLIENTS<br>& FAM</div>
-                </div>
-
-                <div class="studio-img-wrapper-small">
-                    <img src="images/studio_vibe_small.jpg" alt="The Bass Studios Details" class="studio-img">
-                </div>
-
-                <div class="studio-right">
-                    <div class="studio-img-wrapper">
-                        <img src="images/studio_vibe.jpg" alt="The Bass Studios Session" class="studio-img">
-                    </div>
+        <!-- Studio Gallery Section -->
+        <section class="sec-gallery">
+            <h2 class="section-title">STUDIO GALLERY</h2>
+            <div class="marquee-gallery">
+                <div class="marquee-inner">
+                    <img src="images/IMG_7835.jpg" alt="The Bass Studios Main Setup">
+                    <img src="images/IMG_7837.jpg" alt="Studio Lounge Area">
+                    <img src="images/IMG_7828.jpg" alt="Creative Workspace">
+                    <img src="images/IMG_7834.jpg" alt="Hardware Details">
+                    <img src="images/IMG_7838.jpg" alt="Studio Aesthetics">
+                    <!-- Duplicate for seamless loop -->
+                    <img src="images/IMG_7835.jpg" alt="The Bass Studios Main Setup">
+                    <img src="images/IMG_7837.jpg" alt="Studio Lounge Area">
+                    <img src="images/IMG_7828.jpg" alt="Creative Workspace">
+                    <img src="images/IMG_7834.jpg" alt="Hardware Details">
+                    <img src="images/IMG_7838.jpg" alt="Studio Aesthetics">
                 </div>
             </div>
         </section>
 
-        <!-- Equipment Section -->
-        <section class="sec-equipment">
-            <h2 class="eq-heading">STUDIO GEARS</h2>
-            <ul class="eq-list">
-                <li><span>Interface</span>UAD Apollo</li>
-                <li><span>Monitors</span>Yamaha HS8</li>
-                <li><span>Microphone</span>U103</li>
-            </ul>
+        <!-- Past Work Section -->
+        <section class="sec-past-work">
+            <h2 class="section-title">PAST WORK</h2>
+            <div class="video-grid">
+                <div class="video-item">
+                    <iframe src="https://www.youtube.com/embed/j1gO_doE6jo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+                <div class="video-item">
+                    <iframe src="https://www.youtube.com/embed/K7x8W06VjZY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+            </div>
         </section>
 
         <!-- Services Section -->
@@ -128,7 +135,34 @@
     <footer class="sec-footer">
         <div class="footer-top">
             <h2 class="footer-massive">CONNECT</h2>
-            <a href="https://instagram.com/thebasstudios" target="_blank" class="ig-link">@thebasstudios</a>
+            <div class="footer-links">
+                <a href="tel:+918447307466" class="footer-link-item">
+                    <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l2.11-2.11a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                        </path>
+                    </svg>
+                    <span>+91 84473 07466</span>
+                </a>
+                <a href="https://instagram.com/thebasstudios" target="_blank" class="footer-link-item">
+                    <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                    <span>@thebasstudios</span>
+                </a>
+                <a href="https://maps.app.goo.gl/TPLMdBVWButx9ivS9" target="_blank" class="footer-link-item">
+                    <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                    <span>THE BASS STUDIOS</span>
+                </a>
+            </div>
         </div>
 
         <svg class="footer-vinyl" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -145,11 +179,7 @@
         </svg>
 
         <div class="footer-bottom">
-            <address>
-                16-D, Madhuban Chowk, Near Shiva Market<br>
-                Block A, Harsh Vihar, Pitampura<br>
-                New Delhi, Delhi 110034
-            </address>
+            <span>&copy; 2026 THE BASS STUDIOS. ALL RIGHTS RESERVED.</span>
         </div>
     </footer>
 
