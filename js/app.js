@@ -91,4 +91,84 @@ document.addEventListener("DOMContentLoaded", () => {
         prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         shouldRunParallax = isDesktop && !prefersReducedMotion;
     }, { passive: true });
+
+    // Advanced Hero Gallery Logic
+    const slideshow = document.getElementById('mainSlideshow');
+    if (slideshow) {
+        const slides = slideshow.querySelectorAll('.slide');
+        const dotsContainer = slideshow.querySelector('.slide-dots');
+        const prevBtn = slideshow.querySelector('.slide-ctrl.prev');
+        const nextBtn = slideshow.querySelector('.slide-ctrl.next');
+        let currentIdx = 0;
+        let slideInterval;
+        let isPaused = false;
+
+        // Create Dots
+        slides.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(i));
+            dotsContainer.appendChild(dot);
+        });
+
+        const dots = dotsContainer.querySelectorAll('.dot');
+
+        function updateSlides() {
+            slides.forEach((s, i) => {
+                s.classList.toggle('active', i === currentIdx);
+                dots[i].classList.toggle('active', i === currentIdx);
+            });
+        }
+
+        function goToSlide(index) {
+            currentIdx = (index + slides.length) % slides.length;
+            updateSlides();
+            resetInterval();
+        }
+
+        function nextSlide() {
+            goToSlide(currentIdx + 1);
+        }
+
+        function prevSlide() {
+            goToSlide(currentIdx - 1);
+        }
+
+        function startInterval() {
+            if (!isPaused) {
+                slideInterval = setInterval(nextSlide, 4000);
+            }
+        }
+
+        function resetInterval() {
+            clearInterval(slideInterval);
+            startInterval();
+        }
+
+        // Event Listeners
+        if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+        if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+
+        slideshow.addEventListener('mouseenter', () => { isPaused = true; clearInterval(slideInterval); });
+        slideshow.addEventListener('mouseleave', () => { isPaused = false; startInterval(); });
+        
+        // Touch Support (Simple Swipe)
+        let touchStartX = 0;
+        slideshow.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+            isPaused = true;
+            clearInterval(slideInterval);
+        }, { passive: true });
+
+        slideshow.addEventListener('touchend', e => {
+            const touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 50) nextSlide();
+            else if (touchEndX - touchStartX > 50) prevSlide();
+            isPaused = false;
+            startInterval();
+        }, { passive: true });
+
+        startInterval();
+    }
 });
