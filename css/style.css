@@ -661,13 +661,7 @@ body {
     z-index: 2;
 }
 
-address {
-    font-style: normal;
-    font-size: 1.2rem;
-    font-weight: 600;
-    max-width: 300px;
-    line-height: 1.5;
-}
+
 
 
 /* RESPONSIVE & MOBILE OPTIMIZATIONS */
@@ -726,7 +720,7 @@ address {
         font-size: 0.65rem;
     }
 
-    .nav-header {
+    .hero-nav {
         padding: 1rem !important;
     }
 
