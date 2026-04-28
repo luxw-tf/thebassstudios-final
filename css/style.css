@@ -259,6 +259,19 @@ body {
     position: relative;
 }
 
+.sec-gallery .section-title {
+    font-size: 0.9rem;
+    color: var(--c-white);
+    text-align: left;
+    margin-left: 2rem;
+    margin-bottom: 2rem;
+    letter-spacing: 0.4em;
+    font-family: var(--f-sans);
+    font-weight: 900;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
 .slideshow-container {
     position: relative;
     width: calc(100% - 4rem);
