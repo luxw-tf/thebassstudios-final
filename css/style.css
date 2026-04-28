@@ -263,8 +263,8 @@ body {
     position: relative;
     width: calc(100% - 4rem);
     max-width: 1400px;
-    height: 85vh;
-    min-height: 550px;
+    height: 75vh;
+    min-height: 450px;
     margin: 0 auto;
     overflow: hidden;
     border: 4px solid var(--c-black);
@@ -327,8 +327,13 @@ body {
     padding: 1.5rem;
 }
 
-.slide-ctrl.prev { left: 0; }
-.slide-ctrl.next { right: 0; }
+.slide-ctrl.prev {
+    left: 0;
+}
+
+.slide-ctrl.next {
+    right: 0;
+}
 
 .slide-ctrl svg {
     width: 28px;
@@ -366,7 +371,7 @@ body {
         height: 50vh;
         box-shadow: 10px 10px 0px var(--c-red);
     }
-    
+
     .slide-ctrl {
         padding: 0.8rem;
     }
@@ -444,6 +449,7 @@ body {
     transform: translate(-8px, -8px);
     box-shadow: 25px 25px 0px var(--c-black);
 }
+
 .sec-services {
     background-color: var(--c-white);
     padding: 10rem 4rem;
@@ -654,12 +660,19 @@ address {
 
 /* RESPONSIVE & MOBILE OPTIMIZATIONS */
 @media (max-width: 1024px) {
-    .sec-hero, .sec-manifesto, .sec-gallery, .sec-past-work, .sec-services, .sec-footer {
+
+    .sec-hero,
+    .sec-manifesto,
+    .sec-gallery,
+    .sec-past-work,
+    .sec-services,
+    .sec-footer {
         padding: 4rem 2rem;
     }
 
     .nav-icon-link {
-        padding: 0.8rem; /* Increase touch target */
+        padding: 0.8rem;
+        /* Increase touch target */
     }
 
     .section-title {
@@ -671,9 +684,15 @@ address {
     }
 
     /* Disable heavy parallax on mobile via CSS as fallback */
-    .sec-hero::before, .sec-manifesto::before, .sec-gallery::before, .sec-past-work::before, .sec-services::before, .sec-footer::before {
+    .sec-hero::before,
+    .sec-manifesto::before,
+    .sec-gallery::before,
+    .sec-past-work::before,
+    .sec-services::before,
+    .sec-footer::before {
         transform: none !important;
-        background-attachment: scroll; /* Force scroll instead of fixed if any was present */
+        background-attachment: scroll;
+        /* Force scroll instead of fixed if any was present */
     }
 }
 
@@ -702,7 +721,8 @@ address {
     }
 
     .nav-reveal-text {
-        display: none; /* Hide reveal text on small mobile to save space */
+        display: none;
+        /* Hide reveal text on small mobile to save space */
     }
 
     .video-grid {
@@ -737,4 +757,4 @@ address {
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
     }
-}
+}
