@@ -9,14 +9,18 @@ document.addEventListener("DOMContentLoaded", () => {
     // Select all sections that have a background image via ::before
     const parallaxSections = document.querySelectorAll('.sec-hero, .sec-manifesto, .sec-gallery, .sec-past-work, .sec-services, .sec-footer');
 
-    let lastScrollY = window.scrollY;
+    // Performance & Device Detection
+    const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const shouldRunParallax = isDesktop && !prefersReducedMotion;
+
     let ticking = false;
 
     function update() {
         const scrollY = window.scrollY;
         const vh = window.innerHeight;
 
-        // 1. Hero Logic
+        // 1. Hero Logic (Keep simple even on mobile as it's the landing vibe)
         if (heroSec) {
             let progress = Math.min(1, Math.max(0, scrollY / 350));
             let easeProgress = 1 - Math.pow(1 - progress, 4);
@@ -26,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
             heroSec.style.setProperty('--color-p', colorProgress);
         }
 
-        if (heroWrapper && scrollY < vh) {
+        if (heroWrapper && scrollY < vh && isDesktop) {
             heroWrapper.style.transform = `translateY(${scrollY * 0.3}px)`;
         }
 
@@ -36,29 +40,37 @@ document.addEventListener("DOMContentLoaded", () => {
             if (rect.top < vh && rect.bottom > 0) {
                 let visiblePixels = vh - rect.top;
                 let opacityProgress = Math.min(1, visiblePixels / (vh * 0.6));
-                let moveProgress = Math.min(1, visiblePixels / vh);
-                let easeOut = moveProgress * (2 - moveProgress);
-                let translateY = 200 * (1 - easeOut);
-
+                
                 manifestoText.style.opacity = opacityProgress;
-                manifestoText.style.transform = `translateY(${translateY}px)`;
+                
+                if (shouldRunParallax) {
+                    let moveProgress = Math.min(1, visiblePixels / vh);
+                    let easeOut = moveProgress * (2 - moveProgress);
+                    let translateY = 200 * (1 - easeOut);
+                    manifestoText.style.transform = `translateY(${translateY}px)`;
+                } else {
+                    manifestoText.style.transform = 'translateY(0)';
+                }
             }
         }
 
         // 3. Generic Parallax Logic for Section Backgrounds
-        parallaxSections.forEach(section => {
-            const rect = section.getBoundingClientRect();
-            if (rect.top < vh && rect.bottom > 0) {
-                // Calculate how far through the section we are
-                // 0 when section top enters bottom of screen, 1 when section bottom leaves top of screen
-                const scrollRange = vh + rect.height;
-                const scrollProgress = (vh - rect.top) / scrollRange;
-
-                // Map progress to transform (-10% to 10% movement)
-                const translateY = (scrollProgress - 0.5) * 150; // Moves up to 150px
-                section.style.setProperty('--parallax-y', `${translateY}px`);
-            }
-        });
+        if (shouldRunParallax) {
+            parallaxSections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top < vh && rect.bottom > 0) {
+                    const scrollRange = vh + rect.height;
+                    const scrollProgress = (vh - rect.top) / scrollRange;
+                    const translateY = (scrollProgress - 0.5) * 150; 
+                    section.style.setProperty('--parallax-y', `${translateY}px`);
+                }
+            });
+        } else {
+            // Reset parallax for mobile/low-motion
+            parallaxSections.forEach(section => {
+                section.style.setProperty('--parallax-y', '0px');
+            });
+        }
 
         ticking = false;
     }
@@ -72,4 +84,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Initial call
     update();
+
+    // Re-check on resize for better experience
+    window.addEventListener('resize', () => {
+        const newIsDesktop = window.matchMedia('(min-width: 1024px)').matches;
+        if (newIsDesktop !== isDesktop) {
+            window.location.reload(); // Refresh to re-apply logic accurately
+        }
+    });
 });

@@ -592,92 +592,72 @@ address {
 }
 
 
-/* RESPONSIVE */
+/* RESPONSIVE & MOBILE OPTIMIZATIONS */
 @media (max-width: 1024px) {
-    .sec-studio {
+    .sec-hero, .sec-manifesto, .sec-gallery, .sec-past-work, .sec-services, .sec-footer {
         padding: 4rem 2rem;
     }
 
-    .studio-grid {
-        grid-template-columns: 1fr;
+    .nav-icon-link {
+        padding: 0.8rem; /* Increase touch target */
     }
 
-    .sec-studio .marker-text {
-        align-self: center;
-        text-align: center;
+    .section-title {
+        font-size: clamp(3rem, 12vw, 8rem);
     }
 
-    .studio-quote {
-        align-self: center;
-        text-align: center;
-        margin-top: 2rem;
-        margin-bottom: 4rem;
+    .manifesto-text {
+        font-size: clamp(3rem, 10vw, 7rem);
     }
 
-    .studio-img-wrapper {
-        box-shadow: -10px 10px 0px var(--c-blue);
-        margin-top: 200px;
-        /* Leave space for the absolute mid image, or reposition it */
-    }
-
-    .studio-img-wrapper-small {
-        position: relative;
-        left: auto;
-        top: auto;
-        transform: rotate(-4deg);
-        margin: 0 auto -100px auto;
-        /* overlap onto the bottom image */
-        z-index: 4;
-    }
-
-    .studio-img-wrapper-small:hover {
-        transform: rotate(0deg) scale(1.05);
+    /* Disable heavy parallax on mobile via CSS as fallback */
+    .sec-hero::before, .sec-manifesto::before, .sec-gallery::before, .sec-past-work::before, .sec-services::before, .sec-footer::before {
+        transform: none !important;
+        background-attachment: scroll; /* Force scroll instead of fixed if any was present */
     }
 }
 
 @media (max-width: 768px) {
-    .hero-bottom-bar {
-        padding: 0 2rem;
-        flex-direction: column;
-        gap: 0.5rem;
-        align-items: center;
+    .nav-reveal-text {
+        display: none; /* Hide reveal text on small mobile to save space */
     }
 
-    .sec-services,
-    .sec-footer {
-        padding: 4rem 2rem;
-    }
-
-    .tracklist-header,
-    .track-row {
+    .video-grid {
         grid-template-columns: 1fr;
-        gap: 0.5rem;
+        padding: 0 1rem;
+        gap: 2rem;
     }
 
-    .tracklist-header span:not(:first-child) {
+    .tracklist-header {
         display: none;
     }
 
-    .t-title {
-        font-size: 1.5rem;
+    .track-row {
+        grid-template-columns: 1fr;
+        padding: 1.5rem 1rem;
     }
 
-    .t-rate {
-        text-align: left;
+    .footer-top {
+        gap: 1.5rem;
     }
 
-    .eq-list li {
-        flex-direction: column;
-        align-items: flex-start;
+    .footer-link-item {
+        font-size: 1.2rem;
+    }
+}
+
+/* REDUCED MOTION */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
 
-    .eq-list li span {
-        margin-right: 0;
-        margin-bottom: 0.5rem;
-    }
-
-    .eq-list {
-        font-size: 1.5rem;
+    .marquee-inner {
+        animation: none !important;
+        overflow-x: auto;
     }
 }
 }
