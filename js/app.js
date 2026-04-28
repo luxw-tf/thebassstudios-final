@@ -10,9 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const parallaxSections = document.querySelectorAll('.sec-hero, .sec-manifesto, .sec-past-work, .sec-services, .sec-footer');
 
     // Performance & Device Detection
-    const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const shouldRunParallax = isDesktop && !prefersReducedMotion;
+    let isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+    let prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let shouldRunParallax = isDesktop && !prefersReducedMotion;
 
     let ticking = false;
 
@@ -87,9 +87,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Re-check on resize for better experience
     window.addEventListener('resize', () => {
-        const newIsDesktop = window.matchMedia('(min-width: 1024px)').matches;
-        if (newIsDesktop !== isDesktop) {
-            window.location.reload(); // Refresh to re-apply logic accurately
-        }
-    });
+        isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+        prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        shouldRunParallax = isDesktop && !prefersReducedMotion;
+    }, { passive: true });
 });
