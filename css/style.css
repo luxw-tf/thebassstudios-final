@@ -618,6 +618,29 @@ address {
 }
 
 @media (max-width: 768px) {
+    .huge-text {
+        font-size: clamp(3rem, 16vw, 6.5rem) !important;
+    }
+
+    .hero-bottom-bar {
+        padding: 0 1.5rem;
+        bottom: 1.5rem;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0.8rem;
+        font-size: 0.65rem;
+    }
+
+    .nav-header {
+        padding: 1rem !important;
+    }
+
+    .nav-icon {
+        width: 24px;
+        height: 24px;
+    }
+
     .nav-reveal-text {
         display: none; /* Hide reveal text on small mobile to save space */
     }
