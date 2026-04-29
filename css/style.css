@@ -160,11 +160,13 @@ body {
 
 .reveal-s {
     display: inline-block;
-    width: calc(var(--p, 0) * 0.65em);
+    width: calc(var(--p, 0) * 0.8em);
     opacity: var(--p, 0);
     overflow: hidden;
     vertical-align: bottom;
-    padding-right: 0.02em;
+    padding-right: 0.1em;
+    letter-spacing: normal;
+    margin-right: calc(var(--p, 0) * -0.1em); /* Compensate for the extra width when merging */
 }
 
 #word1 {
