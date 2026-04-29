@@ -174,7 +174,7 @@ body {
 
 #word2 {
     transform: translate(calc(0% + var(--p, 0) * -50%),
-            calc(-50% + var(--p, 0) * 35%));
+            calc(-50% + var(--p, 0) * 25%));
     color: color-mix(in srgb, var(--c-white) calc(var(--color-p, 0) * 100%), var(--c-red));
 }
 
