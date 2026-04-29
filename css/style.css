@@ -32,13 +32,22 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+/* Global Inset Shadow to hide blurred background edges */
+.sec-hero,
+.sec-manifesto,
+.sec-services,
+.sec-past-work,
+.sec-footer {
+    box-shadow: inset 0 0 120px 20px rgba(0, 0, 0, 0.9);
+}
+
 
 /* ---------------------------------
    SECTION: HERO
    --------------------------------- */
 .sec-hero {
     height: 100vh;
-    background-color: var(--c-blue);
+    background-color: var(--c-black);
     position: relative;
     display: flex;
     flex-direction: column;
@@ -210,7 +219,7 @@ body {
    SECTION: MANIFESTO
    --------------------------------- */
 .sec-manifesto {
-    background-color: var(--c-white);
+    background-color: var(--c-black);
     color: var(--c-white);
     min-height: 100vh;
     display: flex;
@@ -439,7 +448,7 @@ body {
    --------------------------------- */
 
 .sec-services {
-    background-color: var(--c-white);
+    background-color: var(--c-black);
     padding: 10rem 4rem;
     position: relative;
     overflow: hidden;
