@@ -647,18 +647,18 @@ body {
 .footer-link-item {
     display: flex;
     align-items: center;
-    gap: 1.2rem;
+    gap: 1rem;
     color: var(--c-red);
     text-decoration: none;
     font-family: var(--f-sans);
     font-weight: 900;
-    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-size: clamp(1.1rem, 2.2vw, 1.5rem);
     transition: all 0.3s ease;
 }
 
 .footer-icon {
-    width: 32px;
-    height: 32px;
+    width: 22px;
+    height: 22px;
     flex-shrink: 0;
 }
 
