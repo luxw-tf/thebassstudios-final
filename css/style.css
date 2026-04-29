@@ -311,7 +311,7 @@ body {
     z-index: 1;
 }
 
-.sec-past-work>* {
+.sec-past-work > * {
     position: relative;
     z-index: 2;
 }
@@ -373,10 +373,6 @@ body {
     transform: scale(1.08);
     filter: grayscale(0%);
     z-index: 2;
-}
-
-.sec-past-work .gallery-slide {
-    flex: 0 0 45%;
 }
 
 .gallery-slide img,
@@ -672,8 +668,7 @@ body {
         top: 0 !important;
     }
 
-    .sec-gallery,
-    .sec-past-work {
+    .sec-gallery {
         padding: 4rem 0;
     }
 
@@ -686,10 +681,7 @@ body {
         height: 45vh;
     }
 
-    .gallery-slide iframe {
-        height: 352px;
-    }
-
+    .sec-past-work,
     .sec-services,
     .sec-footer {
         padding: 4rem 2rem;
