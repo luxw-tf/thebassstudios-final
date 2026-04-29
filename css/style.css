@@ -267,14 +267,16 @@ body {
 /* ---------------------------------
    SECTION: STUDIO GALLERY (CENTER FOCUS)
    --------------------------------- */
-.sec-gallery {
+.sec-gallery,
+.sec-collabs {
     background: var(--c-black);
     padding: 5rem 0;
     overflow: hidden;
     position: relative;
 }
 
-.sec-gallery .section-title {
+.sec-gallery .section-title,
+.sec-collabs .section-title {
     font-size: clamp(1.4rem, 4vw, 2rem);
     color: var(--c-white);
     text-align: center;
@@ -318,12 +320,14 @@ body {
     z-index: 2;
 }
 
-.gallery-slide img {
+.gallery-slide img,
+.gallery-slide iframe {
     width: 100%;
     height: 55vh;
     min-height: 400px;
     object-fit: contain;
     transition: filter 0.8s ease;
+    border: none;
 }
 
 .gallery-dots {
@@ -609,7 +613,8 @@ body {
         top: 0 !important;
     }
 
-    .sec-gallery {
+    .sec-gallery,
+    .sec-collabs {
         padding: 4rem 0;
     }
 
@@ -618,7 +623,8 @@ body {
         margin: 0 2.5vw;
     }
     
-    .gallery-slide img {
+    .gallery-slide img,
+    .gallery-slide iframe {
         height: 45vh;
     }
 }
