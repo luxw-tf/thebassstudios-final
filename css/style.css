@@ -375,6 +375,10 @@ body {
     z-index: 2;
 }
 
+.sec-past-work .gallery-slide {
+    flex: 0 0 45%;
+}
+
 .gallery-slide img,
 .gallery-slide iframe {
     width: 100%;
@@ -668,7 +672,8 @@ body {
         top: 0 !important;
     }
 
-    .sec-gallery {
+    .sec-gallery,
+    .sec-past-work {
         padding: 4rem 0;
     }
 
@@ -677,11 +682,11 @@ body {
         margin: 0 2.5vw;
     }
 
-    .gallery-slide img {
+    .gallery-slide img,
+    .gallery-slide iframe {
         height: 45vh;
     }
 
-    .sec-past-work,
     .sec-services,
     .sec-footer {
         padding: 4rem 2rem;
