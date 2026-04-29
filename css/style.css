@@ -133,12 +133,13 @@ body {
 .huge-text {
     font-family: var(--f-display);
     font-size: clamp(6rem, 15vw, 18rem);
-    line-height: 0.85;
+    line-height: 1.1;
     text-transform: uppercase;
     text-align: center;
     letter-spacing: -0.02em;
     z-index: 2;
     mix-blend-mode: hard-light;
+    padding: 0.1em 0;
 }
 
 .huge-text-wrapper {
@@ -160,13 +161,10 @@ body {
 
 .reveal-s {
     display: inline-block;
-    width: calc(var(--p, 0) * 0.8em);
+    width: calc(var(--p, 0) * 0.55em);
     opacity: var(--p, 0);
     overflow: hidden;
     vertical-align: bottom;
-    padding-right: 0.1em;
-    letter-spacing: normal;
-    margin-right: calc(var(--p, 0) * -0.1em); /* Compensate for the extra width when merging */
 }
 
 #word1 {
