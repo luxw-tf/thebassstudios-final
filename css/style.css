@@ -269,25 +269,21 @@ body {
    --------------------------------- */
 .sec-gallery {
     background: var(--c-black);
-    min-height: 100vh;
-    padding: 4rem 0;
+    padding: 10rem 0;
     overflow: hidden;
     position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }
 
 .sec-gallery .section-title {
-    font-size: clamp(2rem, 5vw, 3rem);
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
     color: var(--c-white);
     text-align: center;
     margin-bottom: 4rem;
-    letter-spacing: 0.6em;
+    letter-spacing: 0.5em;
     font-family: var(--f-sans);
     font-weight: 900;
     text-transform: uppercase;
-    opacity: 0.95;
+    opacity: 0.9;
 }
 
 .gallery-container {
@@ -295,7 +291,7 @@ body {
     width: 100%;
     max-width: 1800px;
     margin: 0 auto;
-    perspective: 2000px;
+    perspective: 1000px;
 }
 
 .gallery-track {
@@ -306,8 +302,8 @@ body {
 }
 
 .gallery-slide {
-    flex: 0 0 65%;
-    margin: 0 1.5%;
+    flex: 0 0 60%;
+    margin: 0 1%;
     opacity: 0.3;
     transform: scale(0.85);
     transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
@@ -317,15 +313,15 @@ body {
 
 .gallery-slide.active {
     opacity: 1;
-    transform: scale(1.1);
+    transform: scale(1.08);
     filter: grayscale(0%);
     z-index: 2;
 }
 
 .gallery-slide img {
     width: 100%;
-    height: 65vh;
-    min-height: 500px;
+    height: 55vh;
+    min-height: 400px;
     object-fit: contain;
     transition: filter 0.8s ease;
 }
@@ -333,12 +329,12 @@ body {
 .gallery-dots {
     display: flex;
     justify-content: center;
-    gap: 1.5rem;
-    margin-top: 6rem;
+    gap: 1.2rem;
+    margin-top: 4rem;
 }
 
 .g-dot {
-    width: 60px;
+    width: 50px;
     height: 4px;
     background: rgba(255,255,255,0.15);
     cursor: pointer;
@@ -347,7 +343,7 @@ body {
 
 .g-dot.active {
     background: var(--c-red);
-    width: 120px;
+    width: 100px;
 }
 
 @media (max-width: 1024px) {
@@ -358,10 +354,6 @@ body {
     
     .gallery-slide img {
         height: 45vh;
-    }
-    
-    .gallery-nav {
-        display: none; /* Swipe only on mobile */
     }
 }
 

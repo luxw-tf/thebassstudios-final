@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
             dot.onclick = () => updateGallery(i);
             dotsContainer.appendChild(dot);
         });
-        const dots = dotsContainer.querySelectorAll('.g-dot');
+        const dots = document.querySelectorAll('.g-dot');
 
         function updateGallery(idx) {
             currentIdx = (idx + slides.length) % slides.length;
