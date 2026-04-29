@@ -34,23 +34,18 @@ document.addEventListener("DOMContentLoaded", () => {
             heroWrapper.style.transform = `translateY(${scrollY * 0.3}px)`;
         }
 
-        // 2. Manifesto Logic
-        if (manifestoSec && manifestoText) {
+        // 2. Manifesto Logic (Split Text Animation)
+        if (manifestoSec) {
             const rect = manifestoSec.getBoundingClientRect();
             if (rect.top < vh && rect.bottom > 0) {
-                let visiblePixels = vh - rect.top;
-                let opacityProgress = Math.min(1, visiblePixels / (vh * 0.6));
+                // progress: 0 when entering, 1 when centered
+                let progress = Math.min(1, Math.max(0, (vh - rect.top) / (vh * 0.9)));
+                let easeProgress = 1 - Math.pow(1 - progress, 3);
+                manifestoSec.style.setProperty('--mp', easeProgress);
                 
-                manifestoText.style.opacity = opacityProgress;
-                
-                if (shouldRunParallax) {
-                    let moveProgress = Math.min(1, visiblePixels / vh);
-                    let easeOut = moveProgress * (2 - moveProgress);
-                    let translateY = 200 * (1 - easeOut);
-                    manifestoText.style.transform = `translateY(${translateY}px)`;
-                } else {
-                    manifestoText.style.transform = 'translateY(0)';
-                }
+                // Color progress
+                let colorProgress = Math.min(1, Math.max(0, (progress - 0.2) / 0.7));
+                manifestoSec.style.setProperty('--m-color-p', colorProgress);
             }
         }
 

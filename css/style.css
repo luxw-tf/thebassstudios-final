@@ -229,15 +229,36 @@ body {
     z-index: 2;
 }
 
-.manifesto-text {
+.manifesto-wrapper {
+    height: 1.5em;
+    z-index: 5;
+}
+
+.manifesto-word {
     font-family: var(--f-display);
-    font-size: clamp(4rem, 8vw, 10rem);
+    font-size: clamp(3rem, 10vw, 12rem);
     text-transform: uppercase;
     text-align: center;
     line-height: 0.85;
     letter-spacing: -0.02em;
-    /* Opacity and Transform managed by JS */
-    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: 0;
+    white-space: nowrap;
+    will-change: transform;
+    mix-blend-mode: hard-light;
+}
+
+#m-word1 {
+    transform: translate(calc(-100% + var(--mp, 0) * 50%),
+            calc(-50% + var(--mp, 0) * -40%));
+}
+
+#m-word2 {
+    transform: translate(calc(0% + var(--mp, 0) * -50%),
+            calc(-50% + var(--mp, 0) * 40%));
+    color: color-mix(in srgb, var(--c-white) calc((1 - var(--m-color-p, 0)) * 100%), var(--c-red));
 }
 
 /* ---------------------------------
@@ -690,10 +711,8 @@ body {
         font-size: clamp(3rem, 12vw, 8rem);
     }
 
-    .manifesto-text {
-        font-size: clamp(3rem, 10vw, 7rem);
-        opacity: 1 !important;
-        transform: none !important;
+    .manifesto-word {
+        font-size: clamp(2.2rem, 15vw, 7rem);
     }
 
     /* Disable heavy parallax on mobile via CSS as fallback */
