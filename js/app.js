@@ -22,51 +22,67 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let ticking = false;
 
+    let vh = window.innerHeight;
+
     function update() {
         const scrollY = window.scrollY;
-        const vh = window.innerHeight;
+        const writes = [];
 
         // 1. Hero Logic
         if (heroSec && visibleSections.has(heroSec)) {
             let progress = Math.min(1, Math.max(0, scrollY / 350));
             let easeProgress = 1 - Math.pow(1 - progress, 4);
-            heroSec.style.setProperty('--p', easeProgress);
-
             let colorProgress = Math.min(1, Math.max(0, (scrollY - 250) / 250));
-            heroSec.style.setProperty('--color-p', colorProgress);
             
-            if (heroWrapper && isDesktop) {
-                heroWrapper.style.transform = `translateY(${scrollY * 0.3}px)`;
-            }
+            writes.push(() => {
+                heroSec.style.setProperty('--p', easeProgress);
+                heroSec.style.setProperty('--color-p', colorProgress);
+                if (heroWrapper && isDesktop) {
+                    heroWrapper.style.transform = `translateY(${scrollY * 0.3}px)`;
+                }
+            });
         }
 
         // 2. Manifesto Logic
         if (manifestoSec && manifestoText && visibleSections.has(manifestoSec)) {
-            const rect = manifestoSec.getBoundingClientRect();
-            let visiblePixels = vh - rect.top;
+            const rectTop = manifestoSec.getBoundingClientRect().top; // READ
+            let visiblePixels = vh - rectTop;
             let opacityProgress = Math.min(1, visiblePixels / (vh * 0.6));
-            manifestoText.style.opacity = opacityProgress;
-
+            
+            let tf = 'translateY(0)';
             if (shouldRunParallax) {
                 let moveProgress = Math.min(1, visiblePixels / vh);
                 let easeOut = moveProgress * (2 - moveProgress);
                 let translateY = 200 * (1 - easeOut);
-                manifestoText.style.transform = `translateY(${translateY}px)`;
-            } else {
-                manifestoText.style.transform = 'translateY(0)';
+                tf = `translateY(${translateY}px)`;
             }
+
+            writes.push(() => {
+                manifestoText.style.opacity = opacityProgress;
+                manifestoText.style.transform = tf;
+            });
         }
 
         // 3. Generic Parallax
         if (shouldRunParallax) {
+            const parallaxData = [];
             visibleSections.forEach(section => {
-                const rect = section.getBoundingClientRect();
+                const rect = section.getBoundingClientRect(); // READ
                 const scrollRange = vh + rect.height;
                 const scrollProgress = (vh - rect.top) / scrollRange;
                 const translateY = (scrollProgress - 0.5) * 150;
-                section.style.setProperty('--parallax-y', `${translateY}px`);
+                parallaxData.push({ section, translateY });
+            });
+
+            writes.push(() => {
+                parallaxData.forEach(item => {
+                    item.section.style.setProperty('--parallax-y', `${item.translateY}px`);
+                });
             });
         }
+
+        // --- BATCH ALL WRITES ---
+        writes.forEach(w => w());
 
         ticking = false;
     }
@@ -81,6 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
     update();
 
     window.addEventListener('resize', () => {
+        vh = window.innerHeight;
         isDesktop = window.matchMedia('(min-width: 1024px)').matches;
         prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         shouldRunParallax = isDesktop && !prefersReducedMotion;
@@ -170,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     slide.classList.remove('active-cover');
                 }
 
-                let opacity = absOffset > 3 ? 0 : (absOffset === 0 ? 1 : 0.4);
+                let opacity = absOffset > 4 ? 0 : 1;
                 let zIndex = 100 - absOffset;
 
                 slide.style.transform = `translateX(${translateX}%) translateZ(${translateZ}px) rotateY(${rotateY}deg)`;
@@ -192,10 +209,12 @@ document.addEventListener("DOMContentLoaded", () => {
         resetCoverTimer();
 
         secGallerySlides.forEach((slide, i) => {
-            slide.addEventListener('click', () => {
-                currentCoverIdx = i;
-                updateCoverFlow();
-                resetCoverTimer();
+            ['click', 'mouseenter'].forEach(evt => {
+                slide.addEventListener(evt, () => {
+                    currentCoverIdx = i;
+                    updateCoverFlow();
+                    resetCoverTimer();
+                });
             });
         });
 
