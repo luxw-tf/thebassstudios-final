@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const manifestoText = document.querySelector('.manifesto-text');
 
     // Select all sections that have a background image via ::before
-    const parallaxSections = document.querySelectorAll('.sec-hero, .sec-manifesto, .sec-services, .sec-footer');
+    const parallaxSections = document.querySelectorAll('.sec-hero, .sec-manifesto, .sec-services, .sec-footer, .sec-collabs');
 
     // Performance & Device Detection
     let isDesktop = window.matchMedia('(min-width: 1024px)').matches;
