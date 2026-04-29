@@ -368,6 +368,10 @@ body {
     position: relative;
 }
 
+.sec-past-work .gallery-slide {
+    flex: 0 0 45%;
+}
+
 .gallery-slide.active {
     opacity: 1;
     transform: scale(1.08);
@@ -682,9 +686,12 @@ body {
         margin: 0 5vw;
     }
 
-    .gallery-slide img,
-    .gallery-slide iframe {
+    .gallery-slide img {
         height: 40vh;
+    }
+
+    .gallery-slide iframe {
+        height: 352px;
     }
 
     .sec-services,
