@@ -133,13 +133,12 @@ body {
 .huge-text {
     font-family: var(--f-display);
     font-size: clamp(6rem, 15vw, 18rem);
-    line-height: 1.1;
+    line-height: 0.85;
     text-transform: uppercase;
     text-align: center;
     letter-spacing: -0.02em;
     z-index: 2;
     mix-blend-mode: hard-light;
-    padding: 0.1em 0;
 }
 
 .huge-text-wrapper {
@@ -168,6 +167,8 @@ body {
 }
 
 #word1 {
+    line-height: 1.1;
+    padding-bottom: 0.15em;
     transform: translate(calc(-100% + var(--p, 0) * 50%),
             calc(-50% + var(--p, 0) * -42.5%));
 }
