@@ -148,5 +148,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     initGallery('.sec-gallery');
-    // initGallery('.sec-collabs'); // Removed Spotify Collabs
+    initGallery('.sec-past-work'); 
 });
