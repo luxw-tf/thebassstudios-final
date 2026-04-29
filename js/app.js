@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
         shouldRunParallax = isDesktop && !prefersReducedMotion;
     }, { passive: true });
 
-    // Modular Gallery Controller
+    // Modular Gallery Engine
     function initGallery(sectionSelector) {
         const section = document.querySelector(sectionSelector);
         if (!section) return;
@@ -102,13 +102,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const dotsContainer = section.querySelector('.gallery-dots');
 
         if (galleryTrack && slides.length > 0) {
-            let currentIdx = 1;
+            let currentIdx = 0;
             let autoTimer;
 
-            // Init Dots
+            // Initialize Progress Indicators
             slides.forEach((_, i) => {
                 const dot = document.createElement('div');
                 dot.className = 'g-dot';
+                dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
                 dot.onclick = () => updateGallery(i);
                 dotsContainer.appendChild(dot);
             });
@@ -117,33 +118,43 @@ document.addEventListener("DOMContentLoaded", () => {
             function updateGallery(idx) {
                 currentIdx = (idx + slides.length) % slides.length;
 
-                const slideWidth = slides[0].offsetWidth + (parseFloat(getComputedStyle(slides[0]).marginLeft) * 2);
-                const offset = -currentIdx * slideWidth + (window.innerWidth - slideWidth) / 2;
+                // Precision Alignment Math
+                const slide = slides[0];
+                const slideWidth = slide.offsetWidth;
+                const slideMargin = parseFloat(getComputedStyle(slide).marginRight) || 0;
+                
+                // Calculate centering offset based on viewport and slide dimensions
+                const trackOffset = -currentIdx * (slideWidth + slideMargin * 2) + (window.innerWidth - (slideWidth + slideMargin * 2)) / 2;
 
-                galleryTrack.style.transform = `translateX(${offset}px)`;
+                galleryTrack.style.transform = `translateX(${trackOffset}px)`;
 
+                // Update Active States
                 slides.forEach((s, i) => s.classList.toggle('active', i === currentIdx));
                 dots.forEach((d, i) => d.classList.toggle('active', i === currentIdx));
 
-                resetTimer();
+                restartAutoCycle();
             }
 
-            function resetTimer() {
+            function restartAutoCycle() {
                 clearInterval(autoTimer);
-                autoTimer = setInterval(() => updateGallery(currentIdx + 1), 4000); // 4s for embeds to be less intrusive
+                autoTimer = setInterval(() => updateGallery(currentIdx + 1), 5000);
             }
 
-            // Touch Swipe
-            let startX = 0;
-            galleryTrack.addEventListener('touchstart', e => startX = e.touches[0].clientX, { passive: true });
+            // Gesture Detection (Touch & Swipe)
+            let touchStartX = 0;
+            galleryTrack.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX, { passive: true });
             galleryTrack.addEventListener('touchend', e => {
-                const endX = e.changedTouches[0].clientX;
-                if (startX - endX > 50) updateGallery(currentIdx + 1);
-                else if (endX - startX > 50) updateGallery(currentIdx - 1);
+                const touchEndX = e.changedTouches[0].clientX;
+                const swipeThreshold = 50;
+                if (touchStartX - touchEndX > swipeThreshold) updateGallery(currentIdx + 1);
+                else if (touchEndX - touchStartX > swipeThreshold) updateGallery(currentIdx - 1);
             }, { passive: true });
 
+            // Responsive Re-alignment
             window.addEventListener('resize', () => updateGallery(currentIdx));
-            updateGallery(currentIdx);
+            
+            // Start the engine
+            updateGallery(0);
         }
     }
 

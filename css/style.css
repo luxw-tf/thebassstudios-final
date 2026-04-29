@@ -281,7 +281,7 @@ body {
 }
 
 /* ---------------------------------
-   SECTION: COLLABS (YOUTUBE GRID)
+   SECTION: DISCOGRAPHY (SPOTIFY GALLERY)
    --------------------------------- */
 .sec-past-work {
     position: relative;
@@ -314,28 +314,14 @@ body {
     color: var(--c-red);
 }
 
-.video-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 4rem;
-    width: 100%;
-    max-width: 1300px;
-    padding: 2rem 4rem;
-    margin: 0 auto 6rem auto;
+.sec-past-work .section-title {
+    color: var(--c-red);
 }
 
-.video-item {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    background: var(--c-black);
-}
-
-.video-item iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-}
+/* ---------------------------------
+   GALLERY ENGINE (SHARED ARCHITECTURE)
+   --------------------------------- */
+.gallery-container {
 
 .gallery-container {
     position: relative;
@@ -746,10 +732,9 @@ body {
         /* Hide reveal text on small mobile to save space */
     }
 
-    .video-grid {
-        grid-template-columns: 1fr;
-        padding: 0 1rem;
-        gap: 2rem;
+    .video-grid,
+    .video-item {
+        display: none;
     }
 
     .tracklist-header {
