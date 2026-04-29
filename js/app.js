@@ -38,13 +38,15 @@ document.addEventListener("DOMContentLoaded", () => {
         if (manifestoSec) {
             const rect = manifestoSec.getBoundingClientRect();
             if (rect.top < vh && rect.bottom > 0) {
-                // progress: 0 when entering, 1 when centered
-                let progress = Math.min(1, Math.max(0, (vh - rect.top) / (vh * 0.9)));
-                let easeProgress = 1 - Math.pow(1 - progress, 3);
-                manifestoSec.style.setProperty('--mp', easeProgress);
+                // progress: 0 when top enters bottom, 1 when bottom exits top
+                const scrollRange = vh + rect.height;
+                const progress = Math.min(1, Math.max(0, (vh - rect.top) / scrollRange));
                 
-                // Color progress
-                let colorProgress = Math.min(1, Math.max(0, (progress - 0.2) / 0.7));
+                // Use a standard ease or keep linear for exact scroll mapping
+                manifestoSec.style.setProperty('--mp', progress);
+                
+                // Color progress (optional: slightly faster or mapped to middle)
+                let colorProgress = Math.min(1, Math.max(0, (progress - 0.1) / 0.8));
                 manifestoSec.style.setProperty('--m-color-p', colorProgress);
             }
         }
