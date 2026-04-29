@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const manifestoText = document.querySelector('.manifesto-text');
 
     // Select all sections that have a background image via ::before
-    const parallaxSections = document.querySelectorAll('.sec-hero, .sec-manifesto, .sec-services, .sec-footer, .sec-collabs');
+    const parallaxSections = document.querySelectorAll('.sec-hero, .sec-manifesto, .sec-past-work, .sec-services, .sec-footer');
 
     // Performance & Device Detection
     let isDesktop = window.matchMedia('(min-width: 1024px)').matches;
@@ -100,9 +100,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const galleryTrack = section.querySelector('.gallery-track');
         const slides = section.querySelectorAll('.gallery-slide');
         const dotsContainer = section.querySelector('.gallery-dots');
-        
+
         if (galleryTrack && slides.length > 0) {
-            let currentIdx = 1; 
+            let currentIdx = 1;
             let autoTimer;
 
             // Init Dots
@@ -116,15 +116,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
             function updateGallery(idx) {
                 currentIdx = (idx + slides.length) % slides.length;
-                
+
                 const slideWidth = slides[0].offsetWidth + (parseFloat(getComputedStyle(slides[0]).marginLeft) * 2);
                 const offset = -currentIdx * slideWidth + (window.innerWidth - slideWidth) / 2;
-                
+
                 galleryTrack.style.transform = `translateX(${offset}px)`;
-                
+
                 slides.forEach((s, i) => s.classList.toggle('active', i === currentIdx));
                 dots.forEach((d, i) => d.classList.toggle('active', i === currentIdx));
-                
+
                 resetTimer();
             }
 
@@ -135,12 +135,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Touch Swipe
             let startX = 0;
-            galleryTrack.addEventListener('touchstart', e => startX = e.touches[0].clientX, {passive: true});
+            galleryTrack.addEventListener('touchstart', e => startX = e.touches[0].clientX, { passive: true });
             galleryTrack.addEventListener('touchend', e => {
                 const endX = e.changedTouches[0].clientX;
                 if (startX - endX > 50) updateGallery(currentIdx + 1);
                 else if (endX - startX > 50) updateGallery(currentIdx - 1);
-            }, {passive: true});
+            }, { passive: true });
 
             window.addEventListener('resize', () => updateGallery(currentIdx));
             updateGallery(currentIdx);
@@ -148,5 +148,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     initGallery('.sec-gallery');
-    initGallery('.sec-collabs');
+    // initGallery('.sec-collabs'); // Removed Spotify Collabs
 });
