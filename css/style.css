@@ -287,9 +287,55 @@ body {
 }
 
 .sec-gallery .section-title {
-    font-size: clamp(5rem, 14vw, 16rem);
+    font-size: clamp(6rem, 11vw, 18rem);
     color: var(--c-red);
     text-align: center;
+}
+
+/* NEW GALLERY ANIMATION SYSTEM (.sec-gallery only) */
+.sec-gallery .gallery-container {
+    perspective: none;
+    max-width: 95vw;
+}
+.sec-gallery .gallery-track {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    padding: 0;
+    width: 100%;
+    height: 65vh;
+    min-height: 400px;
+    transform: none !important; /* Overrides inline JS from slider */
+    justify-content: center;
+}
+.sec-gallery .gallery-slide {
+    flex: 1;
+    margin: 0;
+    opacity: 0.4;
+    filter: grayscale(100%);
+    transform: none !important;
+    cursor: pointer;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: flex 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease, filter 0.6s ease;
+}
+.sec-gallery .gallery-slide.expanded {
+    flex: 8;
+    opacity: 1;
+    filter: grayscale(0%);
+}
+.sec-gallery .gallery-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+.sec-gallery .gallery-slide.expanded img {
+    transform: scale(1.02);
+}
+.sec-gallery .gallery-dots,
+.sec-gallery .swipe-overlay {
+    display: none !important;
 }
 
 /* ---------------------------------
@@ -324,7 +370,7 @@ body {
 }
 
 .sec-past-work .section-title {
-    font-size: clamp(5rem, 14vw, 16rem);
+    font-size: clamp(6rem, 11vw, 18rem);
     color: var(--c-red);
 }
 
@@ -478,7 +524,7 @@ body {
 
 .services-header h2 {
     font-family: var(--f-display);
-    font-size: clamp(5rem, 14vw, 16rem);
+    font-size: clamp(6rem, 11vw, 18rem);
     text-transform: uppercase;
     text-align: center;
     line-height: 0.8;
@@ -604,7 +650,7 @@ body {
 
 .footer-massive {
     font-family: var(--f-display);
-    font-size: clamp(4rem, 12vw, 14rem);
+    font-size: clamp(6rem, 11vw, 18rem);
     line-height: 0.8;
     text-transform: uppercase;
     margin-bottom: 2rem;
@@ -667,7 +713,11 @@ body {
         /* Increase touch target */
     }
 
-    .section-title {
+    .section-title,
+    .sec-gallery .section-title,
+    .sec-past-work .section-title,
+    .services-header h2,
+    .footer-massive {
         font-size: clamp(3rem, 12vw, 8rem);
     }
 
@@ -791,6 +841,18 @@ body {
         right: -30vw;
         width: 80vw;
         opacity: 0.4;
+    }
+
+    /* Mobile adjustments for the accordion gallery */
+    .sec-gallery .gallery-track {
+        gap: 4px;
+        height: 50vh;
+    }
+    .sec-gallery .gallery-slide {
+        border-radius: 6px;
+    }
+    .sec-gallery .gallery-slide.expanded {
+        flex: 15; /* Larger relative space for better mobile visibility */
     }
 }
 
