@@ -330,33 +330,6 @@ body {
     filter: drop-shadow(0 0 15px var(--c-red));
 }
 
-/* Nav Controls */
-.gallery-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: var(--c-red);
-    color: var(--c-white);
-    border: none;
-    width: 60px;
-    height: 60px;
-    font-size: 1.5rem;
-    cursor: pointer;
-    z-index: 10;
-    transition: all 0.3s ease;
-    opacity: 0.8;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.gallery-nav:hover {
-    background: var(--c-blue);
-    opacity: 1;
-}
-
-.gallery-nav.prev { left: 5%; }
-.gallery-nav.next { right: 5%; }
 
 .gallery-dots {
     display: flex;

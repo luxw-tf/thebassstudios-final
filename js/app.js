@@ -96,8 +96,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const galleryTrack = document.querySelector('.gallery-track');
     const slides = document.querySelectorAll('.gallery-slide');
     const dotsContainer = document.querySelector('.gallery-dots');
-    const prevBtn = document.querySelector('.gallery-nav.prev');
-    const nextBtn = document.querySelector('.gallery-nav.next');
     
     if (galleryTrack && slides.length > 0) {
         let currentIdx = 1; 
@@ -130,9 +128,6 @@ document.addEventListener("DOMContentLoaded", () => {
             clearInterval(autoTimer);
             autoTimer = setInterval(() => updateGallery(currentIdx + 1), 3000);
         }
-
-        if (prevBtn) prevBtn.onclick = () => updateGallery(currentIdx - 1);
-        if (nextBtn) nextBtn.onclick = () => updateGallery(currentIdx + 1);
 
         // Touch Swipe
         let startX = 0;
