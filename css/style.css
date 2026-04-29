@@ -291,7 +291,7 @@ body {
    --------------------------------- */
 .sec-past-work {
     position: relative;
-    padding: 8rem 0 2rem 0;
+    padding: 10rem 0;
     background-color: var(--c-black);
     overflow: hidden;
 }
@@ -682,8 +682,8 @@ body {
     }
 
     .gallery-slide {
-        flex: 0 0 100vw;
-        margin: 0;
+        flex: 0 0 90vw;
+        margin: 0 5vw;
     }
 
     .gallery-slide img {
