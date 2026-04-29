@@ -91,4 +91,59 @@ document.addEventListener("DOMContentLoaded", () => {
         prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         shouldRunParallax = isDesktop && !prefersReducedMotion;
     }, { passive: true });
+
+    // Lightweight Gallery Controller
+    const galleryTrack = document.querySelector('.gallery-track');
+    const slides = document.querySelectorAll('.gallery-slide');
+    const dotsContainer = document.querySelector('.gallery-dots');
+    const prevBtn = document.querySelector('.gallery-nav.prev');
+    const nextBtn = document.querySelector('.gallery-nav.next');
+    
+    if (galleryTrack && slides.length > 0) {
+        let currentIdx = 1; 
+        let autoTimer;
+
+        // Init Dots
+        slides.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.className = 'g-dot';
+            dot.onclick = () => updateGallery(i);
+            dotsContainer.appendChild(dot);
+        });
+        const dots = dotsContainer.querySelectorAll('.g-dot');
+
+        function updateGallery(idx) {
+            currentIdx = (idx + slides.length) % slides.length;
+            
+            const slideWidth = slides[0].offsetWidth + (parseFloat(getComputedStyle(slides[0]).marginLeft) * 2);
+            const offset = -currentIdx * slideWidth + (window.innerWidth - slideWidth) / 2;
+            
+            galleryTrack.style.transform = `translateX(${offset}px)`;
+            
+            slides.forEach((s, i) => s.classList.toggle('active', i === currentIdx));
+            dots.forEach((d, i) => d.classList.toggle('active', i === currentIdx));
+            
+            resetTimer();
+        }
+
+        function resetTimer() {
+            clearInterval(autoTimer);
+            autoTimer = setInterval(() => updateGallery(currentIdx + 1), 3000);
+        }
+
+        if (prevBtn) prevBtn.onclick = () => updateGallery(currentIdx - 1);
+        if (nextBtn) nextBtn.onclick = () => updateGallery(currentIdx + 1);
+
+        // Touch Swipe
+        let startX = 0;
+        galleryTrack.addEventListener('touchstart', e => startX = e.touches[0].clientX, {passive: true});
+        galleryTrack.addEventListener('touchend', e => {
+            const endX = e.changedTouches[0].clientX;
+            if (startX - endX > 50) updateGallery(currentIdx + 1);
+            else if (endX - startX > 50) updateGallery(currentIdx - 1);
+        }, {passive: true});
+
+        window.addEventListener('resize', () => updateGallery(currentIdx));
+        updateGallery(currentIdx);
+    }
 });
