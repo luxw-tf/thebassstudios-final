@@ -67,8 +67,9 @@ body {
     background-image: linear-gradient(rgba(12, 12, 12, 0.2), rgba(12, 12, 12, 0.7)), url('../images/IMG_8046.jpg');
     background-size: cover;
     background-position: center;
-    transform: translateY(var(--parallax-y, 0));
+    transform: translateY(var(--parallax-y, 0)) translateZ(0);
     will-change: transform;
+    backface-visibility: hidden;
     filter: blur(4px);
     z-index: 1;
 }
@@ -240,8 +241,9 @@ body {
     background-image: linear-gradient(rgba(12, 12, 12, 0.3), rgba(12, 12, 12, 0.6)), url('../images/IMG_7827.jpeg');
     background-size: cover;
     background-position: center;
-    transform: translateY(var(--parallax-y, 0));
+    transform: translateY(var(--parallax-y, 0)) translateZ(0);
     will-change: transform;
+    backface-visibility: hidden;
     filter: blur(4px);
     z-index: 1;
 }
@@ -311,27 +313,35 @@ body {
 .sec-gallery .gallery-slide {
     flex: 1;
     margin: 0;
-    opacity: 0.4;
-    filter: grayscale(100%);
-    transform: none !important;
+    opacity: 1;
+    filter: none;
+    transform: translateZ(0) !important;
     cursor: pointer;
     border-radius: 12px;
     overflow: hidden;
-    transition: flex 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease, filter 0.6s ease;
+    position: relative;
+    transition: flex 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: flex-grow;
+}
+.sec-gallery .gallery-slide::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    will-change: opacity;
 }
 .sec-gallery .gallery-slide.expanded {
     flex: 8;
-    opacity: 1;
-    filter: grayscale(0%);
+}
+.sec-gallery .gallery-slide.expanded::after {
+    opacity: 0;
 }
 .sec-gallery .gallery-slide img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.6s ease;
-}
-.sec-gallery .gallery-slide.expanded img {
-    transform: scale(1.02);
 }
 .sec-gallery .gallery-dots,
 .sec-gallery .swipe-overlay {
@@ -358,8 +368,9 @@ body {
     background-image: linear-gradient(rgba(12, 12, 12, 0.4), rgba(12, 12, 12, 0.7)), url('../images/IMG_7837.jpeg');
     background-size: cover;
     background-position: center;
-    transform: translateY(var(--parallax-y, 0));
+    transform: translateY(var(--parallax-y, 0)) translateZ(0);
     will-change: transform;
+    backface-visibility: hidden;
     filter: blur(4px);
     z-index: 1;
 }
@@ -415,11 +426,23 @@ body {
 .gallery-slide {
     flex: 0 0 60%;
     margin: 0 1%;
-    opacity: 0.3;
+    opacity: 0.5;
     transform: scale(0.85);
-    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    filter: grayscale(100%);
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
+    will-change: transform, opacity;
     position: relative;
+    border-radius: 12px;
+}
+
+.gallery-slide::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    transition: opacity 0.8s ease;
+    pointer-events: none;
+    border-radius: 12px;
+    will-change: opacity;
 }
 
 .sec-past-work .gallery-slide {
@@ -429,8 +452,11 @@ body {
 .gallery-slide.active {
     opacity: 1;
     transform: scale(1.08);
-    filter: grayscale(0%);
     z-index: 2;
+}
+
+.gallery-slide.active::after {
+    opacity: 0;
 }
 
 .swipe-overlay {
@@ -510,8 +536,9 @@ body {
     background-image: linear-gradient(135deg, rgba(12, 12, 12, 0.95) 0%, rgba(15, 64, 245, 0.4) 100%), url('../images/IMG_7833.jpeg');
     background-size: cover;
     background-position: center;
-    transform: translateY(var(--parallax-y, 0));
+    transform: translateY(var(--parallax-y, 0)) translateZ(0);
     will-change: transform;
+    backface-visibility: hidden;
     filter: blur(4px);
     z-index: 1;
 }
@@ -607,8 +634,9 @@ body {
     background-image: linear-gradient(rgba(12, 12, 12, 0.4), rgba(12, 12, 12, 0.8)), url('../images/IMG_7838.jpeg');
     background-size: cover;
     background-position: center;
-    transform: translateY(var(--parallax-y, 0));
+    transform: translateY(var(--parallax-y, 0)) translateZ(0);
     will-change: transform;
+    backface-visibility: hidden;
     filter: blur(4px);
     z-index: 1;
 }
@@ -817,6 +845,14 @@ body {
         grid-template-columns: 1fr;
         padding: 0 1rem;
         gap: 2rem;
+    }
+
+    .sec-hero,
+    .sec-manifesto,
+    .sec-services,
+    .sec-past-work,
+    .sec-footer {
+        box-shadow: none !important;
     }
 
     .tracklist-header {

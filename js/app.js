@@ -149,12 +149,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const secGallerySlides = document.querySelectorAll('.sec-gallery .gallery-slide');
     if (secGallerySlides.length > 0) {
-        secGallerySlides[0].classList.add('expanded');
-        secGallerySlides.forEach(slide => {
+        let currentAccordionIdx = 0;
+        let accordionTimer;
+
+        function expandSlide(idx) {
+            secGallerySlides.forEach(s => s.classList.remove('expanded'));
+            secGallerySlides[idx].classList.add('expanded');
+            currentAccordionIdx = idx;
+        }
+
+        function resetAccordionTimer() {
+            clearInterval(accordionTimer);
+            accordionTimer = setInterval(() => {
+                let nextIdx = (currentAccordionIdx + 1) % secGallerySlides.length;
+                expandSlide(nextIdx);
+            }, 3000);
+        }
+
+        expandSlide(0);
+        resetAccordionTimer();
+
+        secGallerySlides.forEach((slide, idx) => {
             ['mouseenter', 'click'].forEach(evt => {
                 slide.addEventListener(evt, () => {
-                    secGallerySlides.forEach(s => s.classList.remove('expanded'));
-                    slide.classList.add('expanded');
+                    expandSlide(idx);
+                    resetAccordionTimer();
                 });
             });
         });
