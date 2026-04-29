@@ -681,19 +681,23 @@ body {
         padding: 4rem 0;
     }
 
-    .gallery-slide {
+    .gallery-slide,
+    .sec-past-work .gallery-slide {
         flex: 0 0 100vw;
         margin: 0;
         opacity: 0;
     }
 
-    .gallery-slide.active {
+    .gallery-slide.active,
+    .sec-past-work .gallery-slide.active {
         opacity: 1;
+        transform: scale(1);
     }
 
     .gallery-slide img,
     .gallery-slide iframe {
         height: 50vh;
+        min-height: auto;
     }
 
     .sec-services,
