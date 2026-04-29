@@ -34,20 +34,27 @@ document.addEventListener("DOMContentLoaded", () => {
             heroWrapper.style.transform = `translateY(${scrollY * 0.3}px)`;
         }
 
-        // 2. Manifesto Logic (Split Text Animation)
-        if (manifestoSec) {
+        // 2. Manifesto Logic
+        if (manifestoSec && manifestoText) {
             const rect = manifestoSec.getBoundingClientRect();
             if (rect.top < vh && rect.bottom > 0) {
-                // progress: 0 when top enters bottom, 1 when bottom exits top
-                const scrollRange = vh + rect.height;
-                const progress = Math.min(1, Math.max(0, (vh - rect.top) / scrollRange));
-                
-                // Use a standard ease or keep linear for exact scroll mapping
-                manifestoSec.style.setProperty('--mp', progress);
-                
-                // Color progress (optional: slightly faster or mapped to middle)
-                let colorProgress = Math.min(1, Math.max(0, (progress - 0.1) / 0.8));
-                manifestoSec.style.setProperty('--m-color-p', colorProgress);
+                let visiblePixels = vh - rect.top;
+                let opacityProgress = Math.min(1, visiblePixels / (vh * 0.6));
+
+                manifestoText.style.opacity = opacityProgress;
+
+                // Update color progress for the accent span
+                let colorP = Math.min(1, Math.max(0, (opacityProgress - 0.2) / 0.8));
+                manifestoSec.style.setProperty('--m-color-p', colorP);
+
+                if (shouldRunParallax) {
+                    let moveProgress = Math.min(1, visiblePixels / vh);
+                    let easeOut = moveProgress * (2 - moveProgress);
+                    let translateY = 200 * (1 - easeOut);
+                    manifestoText.style.transform = `translateY(${translateY}px)`;
+                } else {
+                    manifestoText.style.transform = 'translateY(0)';
+                }
             }
         }
 
@@ -58,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (rect.top < vh && rect.bottom > 0) {
                     const scrollRange = vh + rect.height;
                     const scrollProgress = (vh - rect.top) / scrollRange;
-                    const translateY = (scrollProgress - 0.5) * 150; 
+                    const translateY = (scrollProgress - 0.5) * 150;
                     section.style.setProperty('--parallax-y', `${translateY}px`);
                 }
             });
@@ -149,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         slideshow.addEventListener('mouseenter', () => { isPaused = true; clearInterval(slideInterval); });
         slideshow.addEventListener('mouseleave', () => { isPaused = false; startInterval(); });
-        
+
         // Touch Support (Simple Swipe)
         let touchStartX = 0;
         slideshow.addEventListener('touchstart', e => {
