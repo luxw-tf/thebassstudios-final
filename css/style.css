@@ -269,7 +269,7 @@ body {
    --------------------------------- */
 .sec-gallery {
     background: var(--c-black);
-    padding: 5rem 0 10rem 0;
+    padding: 5rem 0;
     overflow: hidden;
     position: relative;
 }
@@ -330,7 +330,7 @@ body {
     display: flex;
     justify-content: center;
     gap: 0.5rem;
-    margin-top: 4rem;
+    margin-top: 2.5rem;
     padding: 0 2rem;
     width: 100%;
     box-sizing: border-box;
