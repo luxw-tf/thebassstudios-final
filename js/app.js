@@ -43,10 +43,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 manifestoText.style.opacity = opacityProgress;
 
-                // Update color progress for the accent span
-                let colorP = Math.min(1, Math.max(0, (opacityProgress - 0.2) / 0.8));
-                manifestoSec.style.setProperty('--m-color-p', colorP);
-
                 if (shouldRunParallax) {
                     let moveProgress = Math.min(1, visiblePixels / vh);
                     let easeOut = moveProgress * (2 - moveProgress);
