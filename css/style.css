@@ -288,8 +288,30 @@ body {
     position: relative;
 }
 
+.sec-gallery::before {
+    content: '';
+    position: absolute;
+    top: -15%;
+    left: 0;
+    width: 100%;
+    height: 130%;
+    background-image: linear-gradient(rgba(12, 12, 12, 0.5), rgba(12, 12, 12, 0.9)), url('../images/IMG_7828.jpeg');
+    background-size: cover;
+    background-position: center;
+    transform: translateY(var(--parallax-y, 0)) translateZ(0);
+    will-change: transform;
+    backface-visibility: hidden;
+    filter: blur(4px);
+    z-index: 1;
+}
+
+.sec-gallery > * {
+    position: relative;
+    z-index: 2;
+}
+
 .sec-gallery .section-title {
-    font-size: clamp(6rem, 11vw, 18rem);
+    font-size: clamp(3rem, 5.5vw, 9rem);
     color: var(--c-red);
     text-align: center;
 }
@@ -322,23 +344,28 @@ body {
     max-width: 500px;
     height: 60%;
     margin: 0;
-    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s ease;
-    will-change: transform, opacity;
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s ease, filter 0.6s ease;
+    will-change: transform, opacity, filter;
     cursor: pointer;
     border-radius: 12px;
     flex: none; /* remove flex from previous slider */
+    filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-@media (min-width: 1024px) {
-    .sec-gallery .gallery-slide {
-        /* Desktop only reflection for peak mobile GPU performance */
-        -webkit-box-reflect: below 10px linear-gradient(to bottom, rgba(0,0,0,0) 60%, rgba(0,0,0,0.5) 100%);
-    }
+.sec-gallery .gallery-slide.active-cover {
+    filter: blur(0px);
 }
+
 .sec-gallery .gallery-slide img {
-    width: 100%;
-    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
     object-fit: contain;
     border-radius: 12px;
+    display: block;
 }
 .sec-gallery .gallery-slide::after {
     display: none !important;
@@ -381,7 +408,7 @@ body {
 }
 
 .sec-past-work .section-title {
-    font-size: clamp(6rem, 11vw, 18rem);
+    font-size: clamp(3rem, 5.5vw, 9rem);
     color: var(--c-red);
 }
 
@@ -459,8 +486,56 @@ body {
     opacity: 0;
 }
 
+.sec-past-work .gallery-slide iframe {
+    pointer-events: none;
+}
+
+/* Let JS handle pointer-events with the interact-enabled class */
+.sec-past-work .gallery-slide.active.interact-enabled iframe {
+    pointer-events: auto;
+}
+
 .swipe-overlay {
     display: none;
+}
+
+.sec-past-work .gallery-slide.active .swipe-overlay {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    cursor: pointer;
+    background: transparent;
+}
+
+.sec-past-work .gallery-slide.active.interact-enabled .swipe-overlay {
+    display: none;
+}
+
+.sec-past-work .gallery-slide.active .swipe-overlay::after {
+    content: 'CLICK TO INTERACT';
+    position: absolute;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--c-white);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-family: var(--f-primary);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    pointer-events: none;
+}
+
+.sec-past-work .gallery-slide.active .swipe-overlay:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
 }
 
 .gallery-slide img,
@@ -551,7 +626,7 @@ body {
 
 .services-header h2 {
     font-family: var(--f-display);
-    font-size: clamp(6rem, 11vw, 18rem);
+    font-size: clamp(3rem, 5.5vw, 9rem);
     text-transform: uppercase;
     text-align: center;
     line-height: 0.8;
@@ -678,7 +753,7 @@ body {
 
 .footer-massive {
     font-family: var(--f-display);
-    font-size: clamp(6rem, 11vw, 18rem);
+    font-size: clamp(3rem, 5.5vw, 9rem);
     line-height: 0.8;
     text-transform: uppercase;
     margin-bottom: 2rem;
@@ -746,7 +821,7 @@ body {
     .sec-past-work .section-title,
     .services-header h2,
     .footer-massive {
-        font-size: clamp(3rem, 12vw, 8rem);
+        font-size: clamp(1.5rem, 6vw, 4rem);
     }
 
     .manifesto-text {

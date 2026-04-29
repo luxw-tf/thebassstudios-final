@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
             let progress = Math.min(1, Math.max(0, scrollY / 350));
             let easeProgress = 1 - Math.pow(1 - progress, 4);
             let colorProgress = Math.min(1, Math.max(0, (scrollY - 250) / 250));
-            
+
             writes.push(() => {
                 heroSec.style.setProperty('--p', easeProgress);
                 heroSec.style.setProperty('--color-p', colorProgress);
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const rectTop = manifestoSec.getBoundingClientRect().top; // READ
             let visiblePixels = vh - rectTop;
             let opacityProgress = Math.min(1, visiblePixels / (vh * 0.6));
-            
+
             let tf = 'translateY(0)';
             if (shouldRunParallax) {
                 let moveProgress = Math.min(1, visiblePixels / vh);
@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     dotsContainer.appendChild(dot);
                 });
             }
-            
+
             const dots = dotsContainer ? dotsContainer.querySelectorAll('.g-dot') : [];
 
             function updateGallery(idx) {
@@ -156,6 +156,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 else if (endX - startX > 50) updateGallery(currentIdx - 1);
             }, { passive: true });
 
+            let wheelTimeout1;
+            galleryTrack.addEventListener('wheel', (e) => {
+                e.preventDefault(); // Stop all scrolling (vertical/horizontal) from affecting the page
+
+                if (wheelTimeout1) return;
+
+                const isHorizontal = Math.abs(e.deltaX) > Math.abs(e.deltaY);
+                const delta = isHorizontal ? e.deltaX : e.deltaY;
+                if (Math.abs(delta) > 10) {
+                    if (delta > 0) updateGallery(currentIdx + 1);
+                    else updateGallery(currentIdx - 1);
+
+                    wheelTimeout1 = setTimeout(() => { wheelTimeout1 = null; }, 500);
+                }
+            }, { passive: false });
+
             window.addEventListener('resize', () => updateGallery(currentIdx));
             updateGallery(currentIdx);
         }
@@ -163,6 +179,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // initGallery('.sec-gallery'); // Replaced with accordion logic below
     initGallery('.sec-past-work');
+
+    // "Click to Interact" logic for Spotify embeds
+    const pastWorkSlides = document.querySelectorAll('.sec-past-work .gallery-slide');
+    pastWorkSlides.forEach(slide => {
+        slide.addEventListener('click', () => {
+            if (slide.classList.contains('active')) {
+                slide.classList.add('interact-enabled');
+            }
+        });
+        slide.addEventListener('mouseleave', () => {
+            slide.classList.remove('interact-enabled');
+        });
+    });
 
     const secGallerySlides = document.querySelectorAll('.sec-gallery .gallery-slide');
     if (secGallerySlides.length > 0) {
@@ -175,9 +204,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 const absOffset = Math.abs(offset);
                 const sign = Math.sign(offset);
 
-                let rotateY = sign * -55; 
+                let rotateY = sign * -55;
                 let translateZ = absOffset === 0 ? 150 : -absOffset * 100;
-                let translateX = sign * (absOffset * 45); 
+                let translateX = sign * (absOffset * 45);
 
                 if (absOffset === 0) {
                     rotateY = 0;
@@ -231,5 +260,24 @@ document.addEventListener("DOMContentLoaded", () => {
                 updateCoverFlow(); resetCoverTimer();
             }
         }, { passive: true });
+
+        let wheelTimeout2;
+        track.addEventListener('wheel', (e) => {
+            e.preventDefault(); // Stop all scrolling (vertical/horizontal) from affecting the page
+
+            if (wheelTimeout2) return;
+
+            const isHorizontal = Math.abs(e.deltaX) > Math.abs(e.deltaY);
+            const delta = isHorizontal ? e.deltaX : e.deltaY;
+            if (Math.abs(delta) > 10) {
+                if (delta > 0) {
+                    currentCoverIdx = Math.min(secGallerySlides.length - 1, currentCoverIdx + 1);
+                } else {
+                    currentCoverIdx = Math.max(0, currentCoverIdx - 1);
+                }
+                updateCoverFlow(); resetCoverTimer();
+                wheelTimeout2 = setTimeout(() => { wheelTimeout2 = null; }, 500);
+            }
+        }, { passive: false });
     }
 });
