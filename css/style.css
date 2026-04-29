@@ -60,6 +60,7 @@ body {
     background-position: center;
     transform: translateY(var(--parallax-y, 0));
     will-change: transform;
+    filter: blur(4px);
     z-index: 1;
 }
 
@@ -132,7 +133,7 @@ body {
 
 .huge-text {
     font-family: var(--f-display);
-    font-size: clamp(6rem, 15vw, 18rem);
+    font-size: clamp(6rem, 11vw, 18rem);
     line-height: 1.1;
     text-transform: uppercase;
     text-align: center;
@@ -140,6 +141,7 @@ body {
     z-index: 2;
     mix-blend-mode: hard-light;
     padding: 0.1em 0;
+    white-space: nowrap;
 }
 
 .huge-text-wrapper {
@@ -231,6 +233,7 @@ body {
     background-position: center;
     transform: translateY(var(--parallax-y, 0));
     will-change: transform;
+    filter: blur(4px);
     z-index: 1;
 }
 
@@ -261,7 +264,7 @@ body {
     line-height: 0.8;
     margin-bottom: 4rem;
     letter-spacing: -0.03em;
-    color: var(--c-blue);
+    color: var(--c-red);
 }
 
 /* ---------------------------------
@@ -276,12 +279,12 @@ body {
 
 .sec-gallery .section-title {
     font-size: clamp(5rem, 14vw, 16rem);
-    color: var(--c-blue);
+    color: var(--c-red);
     text-align: center;
 }
 
 /* ---------------------------------
-   SECTION: DISCOGRAPHY (SPOTIFY GALLERY)
+   SECTION: COLLABS (YOUTUBE GRID)
    --------------------------------- */
 .sec-past-work {
     position: relative;
@@ -302,6 +305,7 @@ body {
     background-position: center;
     transform: translateY(var(--parallax-y, 0));
     will-change: transform;
+    filter: blur(4px);
     z-index: 1;
 }
 
@@ -311,17 +315,32 @@ body {
 }
 
 .sec-past-work .section-title {
+    font-size: clamp(5rem, 14vw, 16rem);
     color: var(--c-red);
 }
 
-.sec-past-work .section-title {
-    color: var(--c-red);
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 4rem;
+    width: 100%;
+    max-width: 1300px;
+    padding: 2rem 4rem;
+    margin: 0 auto 6rem auto;
 }
 
-/* ---------------------------------
-   GALLERY ENGINE (SHARED ARCHITECTURE)
-   --------------------------------- */
-.gallery-container {
+.video-item {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--c-black);
+}
+
+.video-item iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
 
 .gallery-container {
     position: relative;
@@ -384,7 +403,7 @@ body {
 }
 
 .sec-past-work .gallery-dots {
-    display: none;
+    display: flex;
 }
 
 .g-dot {
@@ -438,6 +457,7 @@ body {
     background-position: center;
     transform: translateY(var(--parallax-y, 0));
     will-change: transform;
+    filter: blur(4px);
     z-index: 1;
 }
 
@@ -534,6 +554,7 @@ body {
     background-position: center;
     transform: translateY(var(--parallax-y, 0));
     will-change: transform;
+    filter: blur(4px);
     z-index: 1;
 }
 
@@ -711,6 +732,7 @@ body {
     .hero-bottom-bar {
         padding: 0 1.5rem;
         bottom: 1.5rem;
+        display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
@@ -732,9 +754,10 @@ body {
         /* Hide reveal text on small mobile to save space */
     }
 
-    .video-grid,
-    .video-item {
-        display: none;
+    .video-grid {
+        grid-template-columns: 1fr;
+        padding: 0 1rem;
+        gap: 2rem;
     }
 
     .tracklist-header {
@@ -751,7 +774,14 @@ body {
     }
 
     .footer-link-item {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
+        word-break: break-all;
+    }
+
+    .footer-vinyl {
+        right: -30vw;
+        width: 80vw;
+        opacity: 0.4;
     }
 }
 
