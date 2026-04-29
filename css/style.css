@@ -160,10 +160,11 @@ body {
 
 .reveal-s {
     display: inline-block;
-    width: calc(var(--p, 0) * 0.55em);
+    width: calc(var(--p, 0) * 0.65em);
     opacity: var(--p, 0);
     overflow: hidden;
     vertical-align: bottom;
+    padding-right: 0.02em;
 }
 
 #word1 {
