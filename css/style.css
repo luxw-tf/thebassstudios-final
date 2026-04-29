@@ -269,21 +269,21 @@ body {
    --------------------------------- */
 .sec-gallery {
     background: var(--c-black);
-    padding: 8rem 0;
+    padding: 3rem 0 8rem 0; /* Reduced top padding */
     overflow: hidden;
     position: relative;
 }
 
 .sec-gallery .section-title {
-    font-size: 1.1rem;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
     color: var(--c-white);
     text-align: center;
-    margin-bottom: 1rem;
-    letter-spacing: 0.4em;
+    margin-bottom: 2rem;
+    letter-spacing: 0.5em;
     font-family: var(--f-sans);
     font-weight: 900;
     text-transform: uppercase;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 .gallery-container {
