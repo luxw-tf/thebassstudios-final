@@ -165,7 +165,7 @@ body {
     opacity: var(--p, 0);
     overflow: hidden;
     vertical-align: bottom;
-    margin-left: -0.05em;
+    margin-left: -0.025em;
 }
 
 #word1 {
