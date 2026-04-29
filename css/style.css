@@ -930,7 +930,7 @@ body.loaded #preloader {
     }
 
     .manifesto-text {
-        font-size: clamp(1.8rem, 11vw, 7rem);
+        font-size: clamp(1rem, 9.5vw, 4rem);
         white-space: nowrap;
     }
 

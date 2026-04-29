@@ -1,5 +1,12 @@
+// Force scroll to top on reload
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
+
 window.addEventListener('load', () => {
     document.body.classList.add('loaded');
+    window.scrollTo(0, 0);
 });
 
 document.addEventListener("DOMContentLoaded", () => {
