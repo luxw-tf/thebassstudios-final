@@ -265,78 +265,10 @@ body {
 }
 
 
+
 /* ---------------------------------
-   SECTION: COLLABS (PAST WORK)
+   SECTION: SERVICES (BOOK SLOT)
    --------------------------------- */
-.sec-past-work {
-    background-color: var(--c-black);
-    color: var(--c-white);
-    padding: 6rem 0;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-}
-
-.sec-past-work::before {
-    content: '';
-    position: absolute;
-    top: -15%;
-    left: 0;
-    width: 100%;
-    height: 130%;
-    background-image: linear-gradient(rgba(12, 12, 12, 0.4), rgba(12, 12, 12, 0.7)), url('../images/IMG_7837.jpeg');
-    background-size: cover;
-    background-position: center;
-    transform: translateY(var(--parallax-y, 0));
-    will-change: transform;
-    z-index: 1;
-}
-
-.sec-past-work>* {
-    position: relative;
-    z-index: 2;
-}
-
-.sec-past-work .section-title {
-    color: var(--c-red);
-}
-
-
-/* Video Grid */
-.video-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 4rem;
-    width: 100%;
-    max-width: 1300px;
-    padding: 2rem 4rem;
-    margin-bottom: 6rem;
-}
-
-.video-item {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    background: var(--c-black);
-    border: 4px solid var(--c-red);
-    box-shadow: 12px 12px 0px var(--c-black);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.video-item iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.video-item:hover {
-    transform: translate(-8px, -8px);
-    box-shadow: 25px 25px 0px var(--c-black);
-}
 
 .sec-services {
     background-color: var(--c-white);
