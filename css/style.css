@@ -386,13 +386,7 @@ body {
 }
 
 .gallery-dots {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 2.5rem;
-    padding: 0 2rem;
-    width: 100%;
-    box-sizing: border-box;
+    display: none;
 }
 
 .g-dot {
@@ -668,20 +662,21 @@ body {
         top: 0 !important;
     }
 
-    .sec-gallery {
+    .sec-gallery,
+    .sec-past-work {
         padding: 4rem 0;
     }
 
     .gallery-slide {
-        flex: 0 0 80vw;
-        margin: 0 2.5vw;
+        flex: 0 0 70vw;
+        margin: 0 5vw;
     }
 
-    .gallery-slide img {
-        height: 45vh;
+    .gallery-slide img,
+    .gallery-slide iframe {
+        height: 40vh;
     }
 
-    .sec-past-work,
     .sec-services,
     .sec-footer {
         padding: 4rem 2rem;
