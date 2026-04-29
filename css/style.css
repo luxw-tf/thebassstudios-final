@@ -682,8 +682,8 @@ body {
     }
 
     .gallery-slide {
-        flex: 0 0 95vw;
-        margin: 0 2.5vw;
+        flex: 0 0 100vw;
+        margin: 0;
         opacity: 0;
     }
 
@@ -691,12 +691,9 @@ body {
         opacity: 1;
     }
 
-    .gallery-slide img {
-        height: 40vh;
-    }
-
+    .gallery-slide img,
     .gallery-slide iframe {
-        height: 352px;
+        height: 50vh;
     }
 
     .sec-services,
