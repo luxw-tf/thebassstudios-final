@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
             let pTf = 'translateY(0)';
             let blurAmt = 0;
             
-            if (shouldRunParallax) {
+            if (!prefersReducedMotion) {
                 // h2 starts at 200, ends at -100
                 let h2MoveProgress = Math.min(1, visiblePixels / (vh * 1.2));
                 let h2Y = 200 - (h2MoveProgress * 300);
@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (manifestoSubtext) {
                     manifestoSubtext.style.opacity = pOpacity;
                     manifestoSubtext.style.transform = pTf;
-                    if (shouldRunParallax) {
+                    if (!prefersReducedMotion) {
                         manifestoSubtext.style.filter = `blur(${blurAmt}px)`;
                     } else {
                         manifestoSubtext.style.filter = 'none';
