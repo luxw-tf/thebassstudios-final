@@ -149,33 +149,68 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const secGallerySlides = document.querySelectorAll('.sec-gallery .gallery-slide');
     if (secGallerySlides.length > 0) {
-        let currentAccordionIdx = 0;
-        let accordionTimer;
+        let currentCoverIdx = Math.floor(secGallerySlides.length / 2);
+        let coverTimer;
 
-        function expandSlide(idx) {
-            secGallerySlides.forEach(s => s.classList.remove('expanded'));
-            secGallerySlides[idx].classList.add('expanded');
-            currentAccordionIdx = idx;
+        function updateCoverFlow() {
+            secGallerySlides.forEach((slide, i) => {
+                const offset = i - currentCoverIdx;
+                const absOffset = Math.abs(offset);
+                const sign = Math.sign(offset);
+
+                let rotateY = sign * -55; 
+                let translateZ = absOffset === 0 ? 150 : -absOffset * 100;
+                let translateX = sign * (absOffset * 45); 
+
+                if (absOffset === 0) {
+                    rotateY = 0;
+                    translateX = 0;
+                    slide.classList.add('active-cover');
+                } else {
+                    slide.classList.remove('active-cover');
+                }
+
+                let opacity = absOffset > 3 ? 0 : (absOffset === 0 ? 1 : 0.4);
+                let zIndex = 100 - absOffset;
+
+                slide.style.transform = `translateX(${translateX}%) translateZ(${translateZ}px) rotateY(${rotateY}deg)`;
+                slide.style.zIndex = zIndex;
+                slide.style.opacity = opacity;
+                slide.style.pointerEvents = opacity === 0 ? 'none' : 'auto';
+            });
         }
 
-        function resetAccordionTimer() {
-            clearInterval(accordionTimer);
-            accordionTimer = setInterval(() => {
-                let nextIdx = (currentAccordionIdx + 1) % secGallerySlides.length;
-                expandSlide(nextIdx);
+        function resetCoverTimer() {
+            clearInterval(coverTimer);
+            coverTimer = setInterval(() => {
+                currentCoverIdx = (currentCoverIdx + 1) % secGallerySlides.length;
+                updateCoverFlow();
             }, 3000);
         }
 
-        expandSlide(0);
-        resetAccordionTimer();
+        updateCoverFlow();
+        resetCoverTimer();
 
-        secGallerySlides.forEach((slide, idx) => {
-            ['mouseenter', 'click'].forEach(evt => {
-                slide.addEventListener(evt, () => {
-                    expandSlide(idx);
-                    resetAccordionTimer();
-                });
+        secGallerySlides.forEach((slide, i) => {
+            slide.addEventListener('click', () => {
+                currentCoverIdx = i;
+                updateCoverFlow();
+                resetCoverTimer();
             });
         });
+
+        const track = document.querySelector('.sec-gallery .gallery-track');
+        let startX = 0;
+        track.addEventListener('touchstart', e => startX = e.touches[0].clientX, { passive: true });
+        track.addEventListener('touchend', e => {
+            const endX = e.changedTouches[0].clientX;
+            if (startX - endX > 50) {
+                currentCoverIdx = Math.min(secGallerySlides.length - 1, currentCoverIdx + 1);
+                updateCoverFlow(); resetCoverTimer();
+            } else if (endX - startX > 50) {
+                currentCoverIdx = Math.max(0, currentCoverIdx - 1);
+                updateCoverFlow(); resetCoverTimer();
+            }
+        }, { passive: true });
     }
 });

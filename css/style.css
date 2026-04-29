@@ -294,54 +294,59 @@ body {
     text-align: center;
 }
 
-/* NEW GALLERY ANIMATION SYSTEM (.sec-gallery only) */
+/* COVER FLOW GALLERY ANIMATION SYSTEM (.sec-gallery only) */
 .sec-gallery .gallery-container {
-    perspective: none;
-    max-width: 95vw;
-}
-.sec-gallery .gallery-track {
-    display: flex;
-    flex-direction: row;
-    gap: 12px;
-    padding: 0;
-    width: 100%;
+    perspective: 1200px;
+    max-width: 100vw;
     height: 65vh;
     min-height: 400px;
-    transform: none !important; /* Overrides inline JS from slider */
+    display: flex;
     justify-content: center;
+    align-items: center;
+    transform-style: preserve-3d;
+    overflow: hidden;
+}
+.sec-gallery .gallery-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: none !important; /* Overrides inline JS from base slider */
 }
 .sec-gallery .gallery-slide {
-    flex: 1;
+    position: absolute;
+    width: 45vw;
+    max-width: 500px;
+    height: 60%;
     margin: 0;
-    opacity: 1;
-    filter: none;
-    transform: translateZ(0) !important;
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s ease;
+    will-change: transform, opacity;
     cursor: pointer;
     border-radius: 12px;
-    overflow: hidden;
-    position: relative;
-    transition: flex 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-    will-change: flex-grow;
+    flex: none; /* remove flex from previous slider */
+    /* Add classic Cover Flow reflection */
+    -webkit-box-reflect: below 10px linear-gradient(to bottom, rgba(0,0,0,0) 60%, rgba(0,0,0,0.5) 100%);
+}
+.sec-gallery .gallery-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
 }
 .sec-gallery .gallery-slide::after {
     content: '';
     position: absolute;
     inset: 0;
     background: rgba(0, 0, 0, 0.6);
-    transition: opacity 0.4s ease;
+    transition: opacity 0.6s ease;
     pointer-events: none;
-    will-change: opacity;
+    border-radius: 12px;
 }
-.sec-gallery .gallery-slide.expanded {
-    flex: 8;
-}
-.sec-gallery .gallery-slide.expanded::after {
+.sec-gallery .gallery-slide.active-cover::after {
     opacity: 0;
-}
-.sec-gallery .gallery-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
 }
 .sec-gallery .gallery-dots,
 .sec-gallery .swipe-overlay {
@@ -879,16 +884,13 @@ body {
         opacity: 0.4;
     }
 
-    /* Mobile adjustments for the accordion gallery */
-    .sec-gallery .gallery-track {
-        gap: 4px;
+    /* Mobile adjustments for the cover flow gallery */
+    .sec-gallery .gallery-container {
         height: 50vh;
     }
     .sec-gallery .gallery-slide {
-        border-radius: 6px;
-    }
-    .sec-gallery .gallery-slide.expanded {
-        flex: 15; /* Larger relative space for better mobile visibility */
+        width: 65vw;
+        height: 55%;
     }
 }
 
