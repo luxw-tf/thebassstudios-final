@@ -317,7 +317,6 @@ body {
 }
 
 .sec-past-work .section-title {
-    font-size: clamp(5rem, 14vw, 16rem);
     color: var(--c-red);
 }
 
@@ -387,6 +386,16 @@ body {
 }
 
 .gallery-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2.5rem;
+    padding: 0 2rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.sec-past-work .gallery-dots {
     display: none;
 }
 
