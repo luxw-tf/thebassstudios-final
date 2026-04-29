@@ -682,8 +682,8 @@ body {
     }
 
     .gallery-slide {
-        flex: 0 0 70vw;
-        margin: 0 5vw;
+        flex: 0 0 100vw;
+        margin: 0;
     }
 
     .gallery-slide img {
