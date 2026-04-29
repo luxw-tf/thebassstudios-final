@@ -25,20 +25,101 @@ html {
 
 body {
     font-family: var(--f-sans);
-    background-color: var(--c-white);
-    color: var(--c-black);
+    background-color: var(--c-black);
+    color: var(--c-white);
     overflow-x: hidden;
     line-height: 1.4;
     -webkit-font-smoothing: antialiased;
 }
 
-/* Global Inset Shadow to hide blurred background edges */
-.sec-hero,
-.sec-manifesto,
-.sec-services,
-.sec-past-work,
-.sec-footer {
-    box-shadow: inset 0 0 120px 20px rgba(0, 0, 0, 0.9);
+/* Global Gradient Overlay to seamlessly feather section edges into black */
+.sec-hero::after,
+.sec-manifesto::after,
+.sec-gallery::after,
+.sec-past-work::after,
+.sec-services::after,
+.sec-footer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--c-black) 0%, transparent 60px, transparent calc(100% - 60px), var(--c-black) 100%);
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* Don't feather the absolute top of the page */
+.sec-hero::after {
+    background: linear-gradient(to bottom, transparent 0%, transparent calc(100% - 60px), var(--c-black) 100%);
+}
+
+
+/* ---------------------------------
+   VINYL PRELOADER
+   --------------------------------- */
+#preloader {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background-color: var(--c-black);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s ease;
+}
+
+body.loaded #preloader {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.vinyl {
+    width: 60px;
+    height: 60px;
+    background: #111;
+    border-radius: 50%;
+    border: 1px solid #333;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 15px rgba(0,0,0,0.8), inset 0 0 8px rgba(255,255,255,0.1);
+    background-image: repeating-radial-gradient(circle at center, #111, #111 2px, #1a1a1a 3px, #111 4px);
+    animation: spin 1s linear infinite;
+}
+
+.vinyl::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.05) 100%);
+    pointer-events: none;
+}
+
+.vinyl-label {
+    width: 20px;
+    height: 20px;
+    background-color: var(--c-red);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.vinyl-hole {
+    width: 4px;
+    height: 4px;
+    background-color: var(--c-black);
+    border-radius: 50%;
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
 }
 
 
@@ -253,6 +334,16 @@ body {
     z-index: 2;
 }
 
+.manifesto-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
 .manifesto-text {
     font-family: var(--f-display);
     font-size: clamp(4rem, 8vw, 10rem);
@@ -262,6 +353,16 @@ body {
     letter-spacing: -0.02em;
     /* Opacity and Transform managed by JS */
     opacity: 0;
+}
+
+.manifesto-subtext {
+    font-family: var(--f-sans);
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.5;
+    font-weight: 500;
+    opacity: 0; /* Managed by JS */
 }
 
 /* ---------------------------------
@@ -312,8 +413,10 @@ body {
 
 .sec-gallery .section-title {
     font-size: clamp(3rem, 5.5vw, 9rem);
-    color: var(--c-red);
+    color: var(--c-white);
     text-align: center;
+    margin-bottom: 8rem;
+    letter-spacing: 0.02em;
 }
 
 /* COVER FLOW GALLERY ANIMATION SYSTEM (.sec-gallery only) */
@@ -409,7 +512,9 @@ body {
 
 .sec-past-work .section-title {
     font-size: clamp(3rem, 5.5vw, 9rem);
-    color: var(--c-red);
+    color: var(--c-white);
+    margin-bottom: 8rem;
+    letter-spacing: 0.02em;
 }
 
 .video-grid {
@@ -826,8 +931,10 @@ body {
 
     .manifesto-text {
         font-size: clamp(3rem, 10vw, 7rem);
-        opacity: 1 !important;
-        transform: none !important;
+    }
+
+    .manifesto-subtext {
+        font-size: clamp(1rem, 4.5vw, 1.3rem);
     }
 
     /* Disable heavy parallax on mobile via CSS as fallback */

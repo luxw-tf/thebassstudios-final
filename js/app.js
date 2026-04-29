@@ -1,9 +1,14 @@
+window.addEventListener('load', () => {
+    document.body.classList.add('loaded');
+});
+
 document.addEventListener("DOMContentLoaded", () => {
     const heroSec = document.querySelector('.sec-hero');
     const heroWrapper = document.querySelector('.huge-text-wrapper');
     const manifestoSec = document.querySelector('.sec-manifesto');
     const manifestoText = document.querySelector('.manifesto-text');
-    const parallaxSections = document.querySelectorAll('.sec-hero, .sec-manifesto, .sec-past-work, .sec-services, .sec-footer');
+    const manifestoSubtext = document.querySelector('.manifesto-subtext');
+    const parallaxSections = document.querySelectorAll('.sec-hero, .sec-manifesto, .sec-gallery, .sec-past-work, .sec-services, .sec-footer');
 
     let isDesktop = window.matchMedia('(min-width: 1024px)').matches;
     let prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -46,40 +51,87 @@ document.addEventListener("DOMContentLoaded", () => {
         // 2. Manifesto Logic
         if (manifestoSec && manifestoText && visibleSections.has(manifestoSec)) {
             const rectTop = manifestoSec.getBoundingClientRect().top; // READ
-            let visiblePixels = vh - rectTop;
-            let opacityProgress = Math.min(1, visiblePixels / (vh * 0.6));
-
-            let tf = 'translateY(0)';
+            let visiblePixels = Math.max(0, vh - rectTop);
+            
+            // H2 Reveal (happens earlier)
+            let h2Opacity = Math.min(1, visiblePixels / (vh * 0.5));
+            
+            // Paragraph Reveal (happens slightly later, delayed)
+            let pOpacity = Math.min(1, Math.max(0, (visiblePixels - vh * 0.3) / (vh * 0.4)));
+            
+            let h2Tf = 'translateY(0)';
+            let pTf = 'translateY(0)';
+            let blurAmt = 0;
+            
             if (shouldRunParallax) {
-                let moveProgress = Math.min(1, visiblePixels / vh);
-                let easeOut = moveProgress * (2 - moveProgress);
-                let translateY = 200 * (1 - easeOut);
-                tf = `translateY(${translateY}px)`;
+                // h2 starts at 200, ends at -100
+                let h2MoveProgress = Math.min(1, visiblePixels / (vh * 1.2));
+                let h2Y = 200 - (h2MoveProgress * 300);
+                h2Tf = `translateY(${h2Y}px)`;
+                
+                // p starts lower, ends at 0
+                let pMoveProgress = Math.min(1, Math.max(0, (visiblePixels - vh * 0.2) / (vh * 0.8)));
+                let pEaseOut = pMoveProgress * (2 - pMoveProgress);
+                let pY = 150 * (1 - pEaseOut);
+                pTf = `translateY(${pY}px)`;
+                
+                blurAmt = Math.max(0, 10 - (pOpacity * 10));
             }
 
             writes.push(() => {
-                manifestoText.style.opacity = opacityProgress;
-                manifestoText.style.transform = tf;
+                manifestoText.style.opacity = h2Opacity;
+                manifestoText.style.transform = h2Tf;
+                
+                if (manifestoSubtext) {
+                    manifestoSubtext.style.opacity = pOpacity;
+                    manifestoSubtext.style.transform = pTf;
+                    if (shouldRunParallax) {
+                        manifestoSubtext.style.filter = `blur(${blurAmt}px)`;
+                    } else {
+                        manifestoSubtext.style.filter = 'none';
+                    }
+                }
             });
         }
 
-        // 3. Generic Parallax
-        if (shouldRunParallax) {
-            const parallaxData = [];
-            visibleSections.forEach(section => {
-                const rect = section.getBoundingClientRect(); // READ
-                const scrollRange = vh + rect.height;
-                const scrollProgress = (vh - rect.top) / scrollRange;
-                const translateY = (scrollProgress - 0.5) * 150;
-                parallaxData.push({ section, translateY });
-            });
+        // 3. Generic Parallax & Fade
+        const parallaxData = [];
+        visibleSections.forEach(section => {
+            const rect = section.getBoundingClientRect(); // READ
+            const scrollRange = vh + rect.height;
+            const scrollProgress = (vh - rect.top) / scrollRange;
+            
+            let translateY = 0;
+            if (shouldRunParallax) {
+                translateY = (scrollProgress - 0.5) * 150;
+            }
+            
+            // Cinematic fade in/out (Runs on all devices)
+            let opacity = 1;
+            if (!section.classList.contains('sec-hero') && !section.classList.contains('sec-manifesto')) {
+                // Keep fully opaque for the middle 70% of scroll. Only fade at the very edges.
+                if (scrollProgress < 0.15) {
+                    opacity = scrollProgress / 0.15;
+                } else if (scrollProgress > 0.85) {
+                    opacity = (1 - scrollProgress) / 0.15;
+                }
+                // Smoothstep curve for buttery visuals
+                opacity = opacity * opacity * (3 - 2 * opacity);
+            }
+            
+            parallaxData.push({ section, translateY, opacity });
+        });
 
-            writes.push(() => {
-                parallaxData.forEach(item => {
+        writes.push(() => {
+            parallaxData.forEach(item => {
+                if (shouldRunParallax) {
                     item.section.style.setProperty('--parallax-y', `${item.translateY}px`);
-                });
+                }
+                if (!item.section.classList.contains('sec-hero') && !item.section.classList.contains('sec-manifesto')) {
+                    item.section.style.opacity = item.opacity;
+                }
             });
-        }
+        });
 
         // --- BATCH ALL WRITES ---
         writes.forEach(w => w());
