@@ -348,3 +348,27 @@ document.addEventListener("DOMContentLoaded", () => {
         }, { passive: false });
     }
 });
+
+// Spotify IFrame API to pause other players when one starts
+window.onSpotifyIframeApiReady = (IFrameAPI) => {
+    const iframes = document.querySelectorAll('.sec-past-work iframe');
+    const controllers = [];
+
+    iframes.forEach((iframe) => {
+        const callback = (EmbedController) => {
+            controllers.push(EmbedController);
+            
+            EmbedController.addListener('playback_update', e => {
+                // If this player is not paused, pause all others
+                if (e.data && !e.data.isPaused) {
+                    controllers.forEach(c => {
+                        if (c !== EmbedController) {
+                            c.pause();
+                        }
+                    });
+                }
+            });
+        };
+        IFrameAPI.createController(iframe, {}, callback);
+    });
+};
