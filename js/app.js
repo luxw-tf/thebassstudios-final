@@ -59,36 +59,36 @@ document.addEventListener("DOMContentLoaded", () => {
         if (manifestoSec && manifestoText && visibleSections.has(manifestoSec)) {
             const rectTop = manifestoSec.getBoundingClientRect().top; // READ
             let visiblePixels = Math.max(0, vh - rectTop);
-            
+
             // H2 Reveal (happens earlier)
             let h2Opacity = Math.min(1, visiblePixels / (vh * 0.5));
-            
+
             // Paragraph Reveal (happens slightly later, delayed)
             let pOpacity = Math.min(1, Math.max(0, (visiblePixels - vh * 0.3) / (vh * 0.4)));
-            
+
             let h2Tf = 'translateY(0)';
             let pTf = 'translateY(0)';
             let blurAmt = 0;
-            
+
             if (!prefersReducedMotion) {
                 // h2 starts at 200, ends at -100
                 let h2MoveProgress = Math.min(1, visiblePixels / (vh * 1.2));
                 let h2Y = 200 - (h2MoveProgress * 300);
                 h2Tf = `translateY(${h2Y}px)`;
-                
+
                 // p starts lower, ends at 0
                 let pMoveProgress = Math.min(1, Math.max(0, (visiblePixels - vh * 0.2) / (vh * 0.8)));
                 let pEaseOut = pMoveProgress * (2 - pMoveProgress);
                 let pY = 150 * (1 - pEaseOut);
                 pTf = `translateY(${pY}px)`;
-                
+
                 blurAmt = Math.max(0, 10 - (pOpacity * 10));
             }
 
             writes.push(() => {
                 manifestoText.style.opacity = h2Opacity;
                 manifestoText.style.transform = h2Tf;
-                
+
                 if (manifestoSubtext) {
                     manifestoSubtext.style.opacity = pOpacity;
                     manifestoSubtext.style.transform = pTf;
@@ -107,12 +107,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const rect = section.getBoundingClientRect(); // READ
             const scrollRange = vh + rect.height;
             const scrollProgress = (vh - rect.top) / scrollRange;
-            
+
             let translateY = 0;
             if (shouldRunParallax) {
                 translateY = (scrollProgress - 0.5) * 150;
             }
-            
+
             // Cinematic fade in/out (Runs on all devices)
             let opacity = 1;
             if (!section.classList.contains('sec-hero') && !section.classList.contains('sec-manifesto')) {
@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Smoothstep curve for buttery visuals
                 opacity = opacity * opacity * (3 - 2 * opacity);
             }
-            
+
             parallaxData.push({ section, translateY, opacity });
         });
 
@@ -204,15 +204,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
             function resetTimer() {
                 clearInterval(autoTimer);
-                autoTimer = setInterval(() => updateGallery(currentIdx + 1), 4000);
+                autoTimer = setInterval(() => {
+                    if (!section.querySelector('.interact-enabled')) {
+                        updateGallery(currentIdx + 1);
+                    }
+                }, 4000);
             }
 
             let startX = 0;
-            galleryTrack.addEventListener('touchstart', e => startX = e.touches[0].clientX, { passive: true });
+            galleryTrack.addEventListener('touchstart', e => {
+                startX = e.touches[0].clientX;
+                clearInterval(autoTimer);
+            }, { passive: true });
             galleryTrack.addEventListener('touchend', e => {
                 const endX = e.changedTouches[0].clientX;
                 if (startX - endX > 50) updateGallery(currentIdx + 1);
                 else if (endX - startX > 50) updateGallery(currentIdx - 1);
+                resetTimer();
             }, { passive: true });
 
             let wheelTimeout1;
