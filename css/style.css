@@ -758,7 +758,7 @@ body.loaded #preloader {
     text-align: center;
     line-height: 0.8;
     margin-bottom: 4rem;
-    letter-spacing: -0.03em;
+    letter-spacing: 0.02em;
     color: var(--c-white);
 }
 
