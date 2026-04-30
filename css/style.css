@@ -357,7 +357,7 @@ body.loaded #preloader {
     font-size: clamp(4rem, 8vw, 10rem);
     text-transform: uppercase;
     text-align: center;
-    line-height: 0.85;
+    line-height: 0.95;
     letter-spacing: -0.02em;
     /* Opacity and Transform managed by JS */
     opacity: 0;
