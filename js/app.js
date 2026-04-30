@@ -355,11 +355,21 @@ window.onSpotifyIframeApiReady = (IFrameAPI) => {
     const controllers = [];
 
     iframes.forEach((iframe) => {
+        // Parse the existing src to get the URI
+        const src = iframe.src || '';
+        const match = src.match(/embed\/(track|album|playlist)\/([a-zA-Z0-9]+)/);
+        const options = {
+            width: '100%',
+            height: '352'
+        };
+        if (match) {
+            options.uri = `spotify:${match[1]}:${match[2]}`;
+        }
+
         const callback = (EmbedController) => {
             controllers.push(EmbedController);
             
             EmbedController.addListener('playback_update', e => {
-                // If this player is not paused, pause all others
                 if (e.data && !e.data.isPaused) {
                     controllers.forEach(c => {
                         if (c !== EmbedController) {
@@ -369,6 +379,10 @@ window.onSpotifyIframeApiReady = (IFrameAPI) => {
                 }
             });
         };
-        IFrameAPI.createController(iframe, {}, callback);
+        
+        // Only initialize if we found a valid Spotify URI
+        if (options.uri) {
+            IFrameAPI.createController(iframe, options, callback);
+        }
     });
 };
